@@ -1,6 +1,6 @@
-# Pizzeria Reference Project (PizzaRP)
+# User Management for Business Users
 
-This is a minimal Pizzeria Reference Project (PizzaRP) as a template for students. 
+This is a User Management Tool for Business Users which manages User based in a Web-Application.
 
 [![License](https://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -25,29 +25,31 @@ This is a minimal Pizzeria Reference Project (PizzaRP) as a template for student
 ## Analysis
 > 🚧: You can reuse the analysis (you made) from other projects (e.g., requirement engineering), but it must be submitted according to the following template. 
 
-
-
 ### Scenario
-
-PizzaRP (Pizzeria Reference Project) is the smallest possible and lightweight demonstration tool allowing the pizzaiolo (Role: Admin) to manage its pizza catalog. 
+The system enables business administrators to efficiently manage user accounts, permissions, and roles across the organization. It provides a centralized platform for user provisioning, authentication, and access control with role-based authorization.
 
 ### User Stories
-1. As an Admin, I want to have a Web app to use on different mobile devices and desktop computers.
-2. As an Admin, I want to see a consistent visual appearance to navigate easily, and it should look consistent.
-3. As an Admin, I want to use list views to explore and read my business data.
-4. As an Admin, I want to use edit and create views to maintain my business data.
-5. As an Admin, I want to log-in so that I can authenticate myself.
-6. As a User, I want to use list views so that I can access public pages.
-7. (Optional) As a User, I want to authenticate myself so that I can read my personal and confidential data.
+1. As an Admin, I want to create new user accounts so that I can add employees to the system.
+2. As an Admin, I want to list all user accounts so that I can see all users in the system.
+3. As an Admin, I want to list all locations along with the number of users assigned to each so that I can understand user distribution by location.
+4. As an Admin, I want to update user information so that I can keep employee data up to date.
+5. As an Admin, I want to deactivate or delete user accounts so that I can manage inactive employees.
+6. As an Admin, I want to reset user passwords so that I can help users regain access to their accounts.
+7. As an Admin, I want to map a user account to a working location so that I can track where employees are based.
+8. As an Admin, I want to view user activity logs so that I can audit and monitor system usage.
+9. As a User, I want to change my password so that I can maintain account security.
 
 ### Use Case
 
 ![](images/use-case.png)
-
-- UC-1 [Show all the Pizza]: Admin can retrieve all the pizza on the menu
-- UC-2 [Show a Pizza]: Admin can retrieve the information on a specific pizza.
-- UC-3 [Edit a Pizza]: Admin can create, update, and delete pizzas from the menu.
-- UC-4 [Show Current Location Offer]: User can retrieve special menu by location
+- UC-1 [List All Users]: Admin can retrieve and view all user accounts in the system.
+- UC-2 [View Location Distribution]: Admin can view all locations with the count of users assigned to each.
+- UC-3 [Update User Information]: Admin can modify and update employee data.
+- UC-4 [Manage User Accounts]: Admin can deactivate or delete user accounts.
+- UC-5 [Reset Password]: Admin can reset user passwords to help users regain access.
+- UC-6 [Assign Working Location]: Admin can map users to working locations for geographical tracking.
+- UC-7 [View Activity Logs]: Admin can audit and monitor user activity and system usage.
+- UC-8 [Change Password]: User can change their own password for account security.
 
 ## Design
 > 🚧: Keep in mind the Corporate Identity (CI); you shall decide appropriately the color schema, graphics, typography, layout, User Experience (UX), and so on.
