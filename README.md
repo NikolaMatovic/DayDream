@@ -179,4 +179,3 @@ Alternatively, you can deploy your application to a free PaaS like [Render](http
 - [Apache License, Version 2.0](blob/master/LICENSE)
 =======
 # Internet-Technology-GroupWork
->>>>>>> origin/main
