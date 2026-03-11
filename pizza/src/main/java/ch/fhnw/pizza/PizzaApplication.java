@@ -18,6 +18,8 @@ public class PizzaApplication {
 
 	@Autowired
 	private MenuService menuService;
+	@Autowired
+	private UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PizzaApplication.class, args);
@@ -38,7 +40,11 @@ public class PizzaApplication {
 		pizza.setPizzaName("Funghi");
 		pizza.setPizzaToppings("Tomato sauce, mozzarella, mushrooms");
 		menuService.addPizza(pizza);
+
+		userService.
 		
 	}
+
+
 
 }

@@ -26,13 +26,13 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(
             User.withUsername("myuser")
-                //.password("{noop}password") //create user with an encrypted password instead of the plain text password
-                .password("{bcrypt}$2a$10$9fxQtdWuRaYn5UchAm5iAexbPi7tmRadnDogJwXPR9fVDJyt9g/su")
+                .password("{noop}password") //create user with an encrypted password instead of the plain text password
+                //.password("{bcrypt}$2a$10$9fxQtdWuRaYn5UchAm5iAexbPi7tmRadnDogJwXPR9fVDJyt9g/su")
                 .authorities("READ","ROLE_USER")
                 .build(), 
             User.withUsername("myadmin")
-                //.password("{noop}password") //create user with an encrypted password instead of the plain text password
-                .password("{bcrypt}$2a$10$9fxQtdWuRaYn5UchAm5iAexbPi7tmRadnDogJwXPR9fVDJyt9g/su")
+                .password("{noop}password") //create user with an encrypted password instead of the plain text password
+                //.password("{bcrypt}$2a$10$9fxQtdWuRaYn5UchAm5iAexbPi7tmRadnDogJwXPR9fVDJyt9g/su")
                 .authorities("READ","ROLE_ADMIN")
                 .build());
 
