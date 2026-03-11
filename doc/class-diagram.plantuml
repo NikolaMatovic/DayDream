@@ -1,0 +1,207 @@
+@startuml Class Diagram - User Management and Pizza Application
+skin default
+header User Management System - Class Diagram
+footer Generated Diagram
+
+' Domain Classes
+package "ch.fhnw.pizza.data.domain" {
+    entity Menu {
+        - id: Long
+        - currentOffer: String
+        --
+        + getId(): Long
+        + setId(id: Long): void
+        + getCurrentOffer(): String
+        + setCurrentOffer(offer: String): void
+        + getPizzaList(): List<Pizza>
+        + setPizzaList(pizzaList: List<Pizza>): void
+    }
+
+    entity Pizza {
+        - id: Long
+        - pizzaName: String
+        - pizzaToppings: String
+        --
+        + getId(): Long
+        + setId(id: Long): void
+        + getPizzaName(): String
+        + setPizzaName(name: String): void
+        + getPizzaToppings(): String
+        + setPizzaToppings(toppings: String): void
+        + getMenu(): Menu
+        + setMenu(menu: Menu): void
+    }
+
+    entity User {
+        - id: Long
+        - username: String
+        - email: String
+        - password: String
+        - firstName: String
+        - lastName: String
+        - status: UserStatus
+        - lastLogin: LocalDateTime
+        --
+        + getId(): Long
+        + getUsername(): String
+        + getEmail(): String
+        + getFirstName(): String
+        + getLastName(): String
+        + getStatus(): UserStatus
+        + getLocation(): Location
+        + setLocation(location: Location): void
+        + getRole(): Role
+        + setRole(role: Role): void
+        + getLastLogin(): LocalDateTime
+        + setLastLogin(time: LocalDateTime): void
+        + changePassword(newPassword: String): void
+    }
+
+    entity Location {
+        - id: Long
+        - name: String
+        - city: String
+        --
+        + getId(): Long
+        + getName(): String
+        + setName(name: String): void
+        + getCity(): String
+        + setCity(city: String): void
+        + getUserCount(): int
+        + getUsers(): List<User>
+    }
+
+    entity Role {
+        - id: Long
+        - name: String
+        - description: String
+        --
+        + getId(): Long
+        + getName(): String
+        + setName(name: String): void
+        + getDescription(): String
+        + setDescription(description: String): void
+        + getPermissions(): List<String>
+    }
+
+    entity ActivityLog {
+        - id: Long
+        - timestamp: LocalDateTime
+        - action: String
+        - description: String
+        --
+        + getId(): Long
+        + getUser(): User
+        + setUser(user: User): void
+        + getTimestamp(): LocalDateTime
+        + getAction(): String
+        + setAction(action: String): void
+        + getDescription(): String
+        + setDescription(description: String): void
+    }
+
+    enum UserStatus {
+        ACTIVE
+        INACTIVE
+        DEACTIVATED
+        DELETED
+    }
+}
+
+' Relationships
+Menu "1" -- "*" Pizza : contains
+Location "1" -- "*" User : assigned to
+Role "1" -- "*" User : has
+User "1" -- "*" ActivityLog : generates
+
+@enduml
+@startuml Class Diagram - User Management and Pizza Application
+
+header User Management System - Class Diagram
+footer Generated Diagram
+
+' Domain Classes
+package "ch.fhnw.pizza.data.domain" {
+
+    entity User {
+        - id: Long
+        - username: String
+        - email: String
+        - password: String
+        - firstName: String
+        - lastName: String
+        - status: UserStatus
+        - lastLogin: LocalDateTime
+        --
+        + getId(): Long
+        + getUsername(): String
+        + getEmail(): String
+        + getFirstName(): String
+        + getLastName(): String
+        + getStatus(): UserStatus
+        + getLocation(): Location
+        + setLocation(location: Location): void
+        + getRole(): Role
+        + setRole(role: Role): void
+        + getLastLogin(): LocalDateTime
+        + setLastLogin(time: LocalDateTime): void
+        + changePassword(newPassword: String): void
+    }
+
+    entity Location {
+        - id: Long
+        - name: String
+        - city: String
+        --
+        + getId(): Long
+        + getName(): String
+        + setName(name: String): void
+        + getCity(): String
+        + setCity(city: String): void
+        + getUserCount(): int
+        + getUsers(): List<User>
+    }
+
+    entity Role {
+        - id: Long
+        - name: String
+        - description: String
+        --
+        + getId(): Long
+        + getName(): String
+        + setName(name: String): void
+        + getDescription(): String
+        + setDescription(description: String): void
+        + getPermissions(): List<String>
+    }
+
+    entity ActivityLog {
+        - id: Long
+        - timestamp: LocalDateTime
+        - action: String
+        - description: String
+        --
+        + getId(): Long
+        + getUser(): User
+        + setUser(user: User): void
+        + getTimestamp(): LocalDateTime
+        + getAction(): String
+        + setAction(action: String): void
+        + getDescription(): String
+        + setDescription(description: String): void
+    }
+
+    enum UserStatus {
+        ACTIVE
+        INACTIVE
+        DEACTIVATED
+        DELETED
+    }
+}
+
+' Relationships
+Location "1" -- "*" User : assigned to
+Role "1" -- "*" User : has
+User "1" -- "*" ActivityLog : generates
+
+@enduml
