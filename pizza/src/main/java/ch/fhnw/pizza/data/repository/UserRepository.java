@@ -11,4 +11,5 @@ import ch.fhnw.pizza.data.domain.User;
 //JpaRepository should be typed to the domain class and an ID type
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
+    User findUserById(String uuid);
 }

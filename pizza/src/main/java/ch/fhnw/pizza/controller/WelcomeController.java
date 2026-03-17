@@ -14,7 +14,7 @@ public class WelcomeController {
     @GetMapping(value="/")
     public String getWelcomeString() {
         
-        return "Hello, welcome to our Pizzeria, soon UserManagement Tool!";
+        return "Hello, welcome to our UserManagement Tool!";
     }
 
     @GetMapping(value="/user")

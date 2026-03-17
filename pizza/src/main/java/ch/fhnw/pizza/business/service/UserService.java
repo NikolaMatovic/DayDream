@@ -18,6 +18,15 @@ public class UserService {
         List<User> userList = userRepository.findAll();
         return userList;
     }  
+    
+    public User findUserById(String id) {
+        try {
+            User user = userRepository.findUserById(id);
+            return user;
+        } catch (Exception e) {
+            throw new RuntimeException("User with id " + id + " not found");
+        }
+    }
 
     public User addUser(User user) throws Exception {
         return userRepository.save(user);

@@ -23,4 +23,15 @@ public class UserController {
         List<User> userList = userService.getAllUsers();
         return userList;
     }
+
+    @GetMapping(path="/users/{id}", produces = "application/json")
+    public ResponseEntity getUser(@PathVariable String id) {
+        try{
+            User user = userService.findUserById(id);
+            return ResponseEntity.ok(user);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with given id");
+        }
+    }
 }
