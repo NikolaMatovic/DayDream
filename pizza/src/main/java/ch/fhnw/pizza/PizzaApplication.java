@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.fhnw.pizza.business.service.MenuService;
+import ch.fhnw.pizza.business.service.UserService;
 import ch.fhnw.pizza.data.domain.Pizza;
+import ch.fhnw.pizza.data.domain.User;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.annotation.PostConstruct;
+
 
 @SpringBootApplication
 @RestController
@@ -41,7 +44,10 @@ public class PizzaApplication {
 		pizza.setPizzaToppings("Tomato sauce, mozzarella, mushrooms");
 		menuService.addPizza(pizza);
 
-		userService.
+
+		//USER
+		userService.addUser(new User("Nikola", "Matovic"));
+		userService.addUser(new User("Luca", "Masella"));
 		
 	}
 
