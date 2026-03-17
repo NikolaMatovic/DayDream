@@ -21,10 +21,10 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 @SpringBootApplication
 @Hidden
-public class PizzaApplication {
+public class UserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PizzaApplication.class, args);
+        SpringApplication.run(UserApplication.class, args);
     }
 
     @Bean
