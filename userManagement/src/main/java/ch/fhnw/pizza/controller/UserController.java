@@ -3,6 +3,7 @@ package ch.fhnw.pizza.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import ch.fhnw.pizza.business.service.UserService;
 import ch.fhnw.pizza.data.domain.User;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "/userapi/v1")
 public class UserController {
