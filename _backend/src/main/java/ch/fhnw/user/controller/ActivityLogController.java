@@ -13,32 +13,4 @@ import ch.fhnw.user.data.domain.ActivityLog;
 @RequestMapping("/activitylogapi/v1")
 public class ActivityLogController {
 
-    @Autowired
-    private ActivityLogService activityLogService;
-
-    @GetMapping("/logs")
-    public List<ActivityLog> getAllLogs() {
-        return activityLogService.getAllLogs();
-    }
-
-    @GetMapping("/logs/{id}")
-    public ResponseEntity<ActivityLog> getLogById(@PathVariable Long id) {
-        return ResponseEntity.ok(activityLogService.getLogById(id));
-    }
-
-    @GetMapping("/logs/user/{userId}")
-    public List<ActivityLog> getLogsByUserId(@PathVariable Long userId) {
-        return activityLogService.getLogsByUserId(userId);
-    }
-
-    @PostMapping("/logs")
-    public ResponseEntity<ActivityLog> createLog(@RequestBody ActivityLog log) {
-        return ResponseEntity.ok(activityLogService.createLog(log));
-    }
-
-    @DeleteMapping("/logs/{id}")
-    public ResponseEntity<String> deleteLog(@PathVariable Long id) {
-        activityLogService.deleteLog(id);
-        return ResponseEntity.ok("ActivityLog deleted successfully");
-    }
 }
