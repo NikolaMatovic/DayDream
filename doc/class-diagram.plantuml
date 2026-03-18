@@ -1,0 +1,94 @@
+@startuml
+header User Management System - Class Diagram
+footer Generated Diagram
+
+' Domain Classes
+package "ch.fhnw.user.data.domain" {
+
+    entity User {
+        - id: String
+        - username: String
+        - email: String
+        - password: String
+        - firstName: String
+        - lastName: String
+        - status: UserStatus
+        - lastLogin: LocalDateTime
+        --
+        + getId(): Long
+        + getUsername(): String
+        + getEmail(): String
+        + getFirstName(): String
+        + getLastName(): String
+        + getStatus(): UserStatus
+        + getLocation(): Location
+        + getRole(): Role
+        + getLastLogin(): LocalDateTime
+
+        + setLocation(location: Location): void
+        + setRole(role: Role): void
+        + setLastLogin(time: LocalDateTime): void
+        + changePassword(newPassword: String): void
+
+    }
+
+    entity Location {
+        - id: String
+        - name: String
+        - city: String
+        --
+        + getId(): Long
+        + getName(): String
+        + getCity(): String
+
+        + setName(name: String): void
+        + setCity(city: String): void
+        + getUserCount(): int
+        + getUsers(): List<User>
+    }
+
+    entity Role {
+        - id: String
+        - name: String
+        - description: String
+        --
+        + getId(): Long
+        + getName(): String
+        + getDescription(): String
+        + getPermissions(): List<String>
+        
+        + setName(name: String): void
+        + setDescription(description: String): void
+      
+    }
+
+    entity ActivityLog {
+        - id: String
+        - timestamp: LocalDateTime
+        - action: String
+        - description: String
+        --
+        + getId(): Long
+        + getUser(): User
+        + getTimestamp(): LocalDateTime
+        + getAction(): String
+        + getDescription(): String
+
+        + setUser(user: User): void
+        + setAction(action: String): void
+        + setDescription(description: String): void
+    }
+
+    enum UserStatus {
+        ACTIVE
+        INACTIVE
+        DEACTIVATED
+        DELETED
+    }
+}
+
+' Relationships
+Location "1" -- "*" User : assigned to
+Role "1" -- "*" User : has
+User "1" -- "*" ActivityLog : generates
+@enduml

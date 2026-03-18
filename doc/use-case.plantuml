@@ -1,0 +1,28 @@
+@startuml User Management Use Cases
+skinparam backgroundColor #FEFEFE
+left to right direction
+
+actor Admin
+actor User
+
+package "User Management System" {
+  usecase UC1 as "List All Users"
+  usecase UC2 as "View Location Distribution"
+  usecase UC3 as "Update User Information"
+  usecase UC4 as "Manage User Accounts"
+  usecase UC5 as "Reset Password"
+  usecase UC6 as "Assign Working Location"
+  usecase UC7 as "View Activity Logs"
+  usecase UC8 as "Change Password"
+}
+
+Admin --> UC1
+Admin --> UC2
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+Admin --> UC6
+Admin --> UC7
+User --> UC8
+
+@enduml
