@@ -65,7 +65,7 @@ Starting from the home page, we can visit different pages. Available public page
 ### Domain Design
 > 🚧: Provide a picture and describe your domain model; you may use Entity-Relationship Model or UML class diagram. Both can be created in Visual Paradigm - we have an academic license for it.
 
-The `ch.fhnw.user.data.domain` package contains the following domain objects / entities including getters and setters:
+The `ch.fhnw.dream.data.domain` package contains the following domain objects / entities including getters and setters:
 
 ![](images/domain-model.png)
 
