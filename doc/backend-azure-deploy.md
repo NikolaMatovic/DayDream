@@ -52,9 +52,9 @@ Two options:
 
 After success, backend is available at:
 
-- `https://meinappname-nikola.azurewebsites.net`
+- `https://meinewebbapp-nidzo.azurewebsites.net`
 
-Use `https://meinappname-nikola.azurewebsites.net/v1/users/all` to test the API.
+Use `https://meinewebbapp-nidzo.azurewebsites.net/v1/users/all` to test the API.
 
 ## 6. Important Azure App Service setting
 

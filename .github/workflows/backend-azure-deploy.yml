@@ -15,7 +15,7 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-  WEBAPP_NAME: MeinAppName-Nikola
+  WEBAPP_NAME: MeineWebbApp-Nidzo
   APP_PORT: "8080"
 
 jobs:
