@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDaydreams } from "../services/api";
 
-export default function DaydreamList() {
+export default function DaydreamList({ onUnauthorized }) {
   const [dreams, setDreams] = useState([]);
   const [error, setError] = useState("");
 
@@ -10,9 +10,13 @@ export default function DaydreamList() {
       .then((data) => setDreams(data))
       .catch((err) => {
         console.error(err);
-        setError("Daydreams could not be loaded");
+        if (err.status === 401 && onUnauthorized) {
+          onUnauthorized();
+          return;
+        }
+        setError(err.message || "Daydreams could not be loaded");
       });
-  }, []);
+  }, [onUnauthorized]);
 
   return (
     <div>

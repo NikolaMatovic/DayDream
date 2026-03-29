@@ -12,8 +12,8 @@ How it works in CI:
 Workflow details:
 
 - Workflow file: `.github/workflows/backend-azure-deploy.yml`
-- Trigger: push to `main` or `daydream` when files in `_backend/` change
-- Trigger also includes `_frontend/**` so UI changes deploy automatically
+- Trigger: push to `main` branch only (when files in `_backend/` or `_frontend/` change)
+- UI changes deploy automatically when merged to main
 - Deploy target: Azure Web App via Publish Profile (no Azure CLI login required)
 
 ## 1. Create GitHub Secret
