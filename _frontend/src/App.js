@@ -71,14 +71,16 @@ function App() {
               </button>
             </div>
           </header>
-          {page === 'create' ? (
-            <CreateDaydreamPage
-              onUnauthorized={handleUnauthorized}
-              onCreated={() => setPage('feed')}
-            />
-          ) : (
-            <DaydreamList onUnauthorized={handleUnauthorized} />
-          )}
+          <main className="app-content">
+            {page === 'create' ? (
+              <CreateDaydreamPage
+                onUnauthorized={handleUnauthorized}
+                onCreated={() => setPage('feed')}
+              />
+            ) : (
+              <DaydreamList onUnauthorized={handleUnauthorized} />
+            )}
+          </main>
         </>
       ) : authMode === 'signup' ? (
         <Signup
