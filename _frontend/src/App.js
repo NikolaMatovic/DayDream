@@ -1,11 +1,11 @@
 import './App.css';
-import UserList from './components/UserList';
+import DaydreamList from './components/DaydreamList';
 
 function App() {
   return (
     <div className="App">
-      <h1>User Management</h1>
-      <UserList />
+      <h1>DayDream</h1>
+      <DaydreamList />
     </div>
   );
 }
