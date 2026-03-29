@@ -14,7 +14,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    // Users are now managed via database (User entity) and DataInitializer
+    // Users are managed via database (User entity) and startup initialization in DayDreamApplication
     // No in-memory user store needed anymore
 
     @Bean
