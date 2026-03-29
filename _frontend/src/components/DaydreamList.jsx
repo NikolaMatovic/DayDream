@@ -59,24 +59,13 @@ export default function DaydreamList({ onUnauthorized }) {
   };
 
   return (
-    <div>
+    <div className="feed-page">
       <h1>Daydream Feed</h1>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {dreams.map((dream) => (
-        <div
-          key={dream.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            margin: "15px auto",
-            borderRadius: "10px",
-            maxWidth: "500px",
-            textAlign: "left",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-          }}
-        >
+        <div key={dream.id} className="daydream-card">
           <h2>{dream.title}</h2>
 
           <p><strong>Description:</strong> {dream.description}</p>
@@ -104,7 +93,7 @@ export default function DaydreamList({ onUnauthorized }) {
           <div>
             <strong>Comments:</strong>
             {dream.comments?.length ? (
-              <ul>
+              <ul className="comment-list">
                 {dream.comments.map((comment) => (
                   <li key={comment.id} style={{ marginTop: "8px" }}>
                     <div>

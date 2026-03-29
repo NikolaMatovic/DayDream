@@ -3,6 +3,13 @@
   background-color: #f5f5f5;
 }
 
+.app-content {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
 .app-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -60,6 +67,52 @@
 
 .logout-btn:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 24px;
+  }
+
+  .user-info {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .user-info span {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .nav-btn,
+  .logout-btn {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-content {
+    padding: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 22px;
+  }
+
+  .nav-btn,
+  .logout-btn {
+    width: 100%;
+  }
 }
 
 .App-logo {
