@@ -2,7 +2,7 @@ import { useState } from "react";
 import { login } from "../services/api";
 import "./Auth.css";
 
-export default function Login({ onLoginSuccess }) {
+export default function Login({ onLoginSuccess, onSwitchToSignup }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -60,7 +60,13 @@ export default function Login({ onLoginSuccess }) {
         </form>
 
         <p className="switch-auth">
-          Verfuegbare Benutzer: nikola, luca, admin (Passwort: password)
+          Noch kein Konto?{" "}
+          <a href="#signup" onClick={(e) => {
+            e.preventDefault();
+            onSwitchToSignup();
+          }}>
+            Jetzt registrieren
+          </a>
         </p>
       </div>
     </div>

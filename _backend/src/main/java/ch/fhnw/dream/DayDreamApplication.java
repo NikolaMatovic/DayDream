@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ch.fhnw.dream.business.service.UserService;
 import ch.fhnw.dream.business.service.DaydreamService;
@@ -19,6 +20,8 @@ import io.swagger.v3.oas.annotations.Hidden;
 @Hidden
 public class DayDreamApplication {
 
+    private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     public static void main(String[] args) {
         SpringApplication.run(DayDreamApplication.class, args);
     }
@@ -26,19 +29,29 @@ public class DayDreamApplication {
     @Bean
     CommandLineRunner initData(UserService userService, DaydreamService daydreamService)  {
         return args -> {
-                User user1 = new User();
-                user1.setUsername("nikola.matovic");
-                user1.setEmail("nikola.matovic@ymail.com");
-                user1.setPasswordHash("demo123");
-                user1.setDisplayName("Nikola Matovic");
-                user1 = userService.createUser(user1); // Save and get managed entity
+            User user1 = createUserIfMissing(
+                userService,
+                "nikola",
+                "nikola@daydream.com",
+                "password",
+                "Nikola User"
+            );
 
-                User user2 = new User();
-                user2.setUsername("luca.masella");
-                user2.setEmail("luca.masella@ymail.com");
-                user2.setPasswordHash("demo123");
-                user2.setDisplayName("Luca Masella");
-                user2 = userService.createUser(user2); // Save and get managed entity
+            User user2 = createUserIfMissing(
+                userService,
+                "luca",
+                "luca@daydream.com",
+                "password",
+                "Luca User"
+            );
+
+            createUserIfMissing(
+                userService,
+                "admin",
+                "admin@daydream.com",
+                "password",
+                "Admin User"
+            );
 
 
                 Daydream daydream1 = new Daydream();
@@ -98,5 +111,22 @@ public class DayDreamApplication {
                 daydreamService.createDaydream(daydream2);
 
         };
+    }
+
+    private User createUserIfMissing(
+            UserService userService,
+            String username,
+            String email,
+            String password,
+            String displayName
+    ) {
+        return userService.getUserByUsername(username).orElseGet(() -> {
+            User user = new User();
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setDisplayName(displayName);
+            user.setPasswordHash(PASSWORD_ENCODER.encode(password));
+            return userService.createUser(user);
+        });
     }
 }

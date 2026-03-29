@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { getDaydreams } from "../services/api";
+import { createComment, getDaydreams } from "../services/api";
+import "./DaydreamList.css";
 
 export default function DaydreamList({ onUnauthorized }) {
   const [dreams, setDreams] = useState([]);
   const [error, setError] = useState("");
+  const [commentInputs, setCommentInputs] = useState({});
+  const [commentError, setCommentError] = useState("");
 
   useEffect(() => {
     getDaydreams()
@@ -17,6 +20,43 @@ export default function DaydreamList({ onUnauthorized }) {
         setError(err.message || "Daydreams could not be loaded");
       });
   }, [onUnauthorized]);
+
+  const handleCommentInputChange = (daydreamId, value) => {
+    setCommentInputs((prev) => ({ ...prev, [daydreamId]: value }));
+  };
+
+  const handleCommentSubmit = async (daydreamId) => {
+    setCommentError("");
+    const content = (commentInputs[daydreamId] || "").trim();
+
+    if (!content) {
+      setCommentError("Kommentar darf nicht leer sein");
+      return;
+    }
+
+    try {
+      const createdComment = await createComment(daydreamId, content);
+      setDreams((prevDreams) =>
+        prevDreams.map((dream) => {
+          if (dream.id !== daydreamId) {
+            return dream;
+          }
+
+          return {
+            ...dream,
+            comments: [...(dream.comments || []), createdComment],
+          };
+        })
+      );
+      setCommentInputs((prev) => ({ ...prev, [daydreamId]: "" }));
+    } catch (err) {
+      if (err.status === 401 && onUnauthorized) {
+        onUnauthorized();
+        return;
+      }
+      setCommentError(err.message || "Kommentar konnte nicht gespeichert werden");
+    }
+  };
 
   return (
     <div>
@@ -80,9 +120,28 @@ export default function DaydreamList({ onUnauthorized }) {
             ) : (
               <p>No comments</p>
             )}
+
+            <div className="comment-input-row">
+              <input
+                type="text"
+                value={commentInputs[dream.id] || ""}
+                onChange={(e) => handleCommentInputChange(dream.id, e.target.value)}
+                placeholder="Kommentar schreiben..."
+                className="comment-input"
+              />
+              <button
+                type="button"
+                className="comment-submit-btn"
+                onClick={() => handleCommentSubmit(dream.id)}
+              >
+                Kommentieren
+              </button>
+            </div>
           </div>
         </div>
       ))}
+
+      {commentError && <p style={{ color: "red" }}>{commentError}</p>}
     </div>
   );
 }
