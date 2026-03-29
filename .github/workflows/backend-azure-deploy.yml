@@ -36,7 +36,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npm ci
+          npm install
           CI=false npm run build
 
       - name: Copy frontend build into backend static resources
