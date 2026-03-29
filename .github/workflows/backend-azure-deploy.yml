@@ -14,7 +14,8 @@ permissions:
   contents: read
 
 env:
-  WEBAPP_NAME: MeinAppName-Nikola
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  WEBAPP_NAME: MeineWebbApp-Nidzo
   APP_PORT: "8080"
 
 jobs:
@@ -58,7 +59,6 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ steps.locate-jar.outputs.jar_path }}
-          startup-command: java -jar /home/site/wwwroot/${{ steps.locate-jar.outputs.jar_name }} --server.port=${{ env.APP_PORT }}
 
       - name: Show deployed URL
         shell: bash
