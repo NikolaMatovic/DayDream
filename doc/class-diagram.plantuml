@@ -3,7 +3,7 @@ header User Management System - Class Diagram
 footer Generated Diagram
 
 ' Domain Classes
-package "ch.fhnw.user.data.domain" {
+package "ch.fhnw.dream.data.domain" {
 
     entity User {
         - id: String
