@@ -1,0 +1,66 @@
+name: Deploy Backend to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+      - daydream
+    paths:
+      - "_backend/**"
+      - ".github/workflows/backend-azure-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  WEBAPP_NAME: MeinAppName-Nikola
+  APP_PORT: "8080"
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Build backend JAR
+        working-directory: _backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./mvnw -B clean package -DskipTests
+
+      - name: Locate built JAR
+        id: locate-jar
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR_PATH=$(find _backend/target -maxdepth 1 -type f -name "*.jar" ! -name "original-*.jar" | head -n 1)
+          if [ -z "$JAR_PATH" ]; then
+            echo "No Spring Boot JAR found in _backend/target"
+            exit 1
+          fi
+          JAR_NAME=$(basename "$JAR_PATH")
+          echo "jar_path=$JAR_PATH" >> "$GITHUB_OUTPUT"
+          echo "jar_name=$JAR_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Azure Web App (Publish Profile)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ steps.locate-jar.outputs.jar_path }}
+          startup-command: java -jar /home/site/wwwroot/${{ steps.locate-jar.outputs.jar_name }} --server.port=${{ env.APP_PORT }}
+
+      - name: Show deployed URL
+        shell: bash
+        run: |
+          echo "Backend deployed to: https://${WEBAPP_NAME,,}.azurewebsites.net"
