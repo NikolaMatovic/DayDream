@@ -1,9 +1,9 @@
-import UserList from "./UserList";
+import DaydreamList from "./components/DaydreamList";
 
 export default function App() {
   return (
     <div>
-      <UserList />
+      <DaydreamList />
     </div>
   );
 }

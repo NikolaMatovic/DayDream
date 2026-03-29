@@ -1,9 +1,19 @@
-# Backend Deployment to Azure Web App
+# Fullstack Deployment to Azure Web App (Backend + Frontend)
 
-This project includes a backend-only deployment workflow:
+This project now deploys backend and frontend together in one Azure Web App.
+
+How it works in CI:
+
+1. Build React frontend in `_frontend`.
+2. Copy build output into Spring Boot static directory `_backend/src/main/resources/static`.
+3. Build Spring Boot JAR in `_backend`.
+4. Deploy the JAR to Azure App Service.
+
+Workflow details:
 
 - Workflow file: `.github/workflows/backend-azure-deploy.yml`
 - Trigger: push to `main` or `daydream` when files in `_backend/` change
+- Trigger also includes `_frontend/**` so UI changes deploy automatically
 - Deploy target: Azure Web App via Publish Profile (no Azure CLI login required)
 
 ## 1. Create GitHub Secret
@@ -50,12 +60,21 @@ Two options:
 
 ## 5. Result
 
-After success, backend is available at:
+After success, one app serves both frontend and backend:
 
 - `https://meinewebbapp-nidzo.azurewebsites.net`
 
-Use `https://meinewebbapp-nidzo.azurewebsites.net/v1/users/all` to test the API.
+Use `https://meinewebbapp-nidzo.azurewebsites.net/` for the frontend.
+
+Use `https://meinewebbapp-nidzo.azurewebsites.net/v1/dreams/all` to test the API.
 
 ## 6. Important Azure App Service setting
 
 This workflow deploys a Spring Boot JAR. In Azure App Service, your Runtime Stack must be Java (not custom container).
+
+## 7. Important backend route note
+
+To allow React `index.html` to be served at `/`, the welcome endpoint was moved to:
+
+- `/api/welcome`
+- `/api/user-role`
