@@ -1,32 +1,31 @@
-@startuml DayDream Use Cases
-skinparam backgroundColor #FEFEFE
+@startuml
 left to right direction
 
-
-actor "User" as RegisteredUser
+actor Visitor
+actor User
 
 rectangle "DayDream Application" {
-  usecase UC1 as "Sign Up"
-  usecase UC2 as "Log In"
-  usecase UC3 as "Create Daydream\n(Title, Description, Mood)"
-  usecase UC4 as "Set Visibility\n(Public/Private)"
-  usecase UC5 as "Add Tags to Daydream"
-  usecase UC6 as "Browse Shared Daydreams"
-  usecase UC7 as "Comment on Daydreams"
+  usecase "UC-1\nRegister Account" as UC1
+  usecase "UC-2\nLog In" as UC2
+  usecase "UC-3\nLog Out" as UC3
+  usecase "UC-4\nBrowse Public Daydreams" as UC4
+  usecase "UC-5\nCreate Daydream" as UC5
+  usecase "UC-6\nUpdate Daydream" as UC6
+  usecase "UC-7\nDelete Daydream" as UC7
+  usecase "UC-8\nSet Daydream Visibility" as UC8
+  usecase "UC-9\nView Personal Feed" as UC9
+  usecase "UC-10\nComment on Daydream" as UC10
 }
 
-RegisteredUser --> UC1
-RegisteredUser --> UC2
-RegisteredUser --> UC3
-RegisteredUser --> UC4
-RegisteredUser --> UC5
-RegisteredUser --> UC6
-RegisteredUser --> UC7
-
-UC3 ..> UC4 : <<include>>
-UC3 ..> UC5 : <<include>>
-UC7 ..> UC2 : <<include>>
-UC3 ..> UC2 : <<include>>
-UC6 ..> UC2 : <<include>>
+Visitor --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
 
 @enduml
