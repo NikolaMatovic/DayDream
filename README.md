@@ -1,6 +1,6 @@
-# User Management for Business Users
+# DayDream Management Tool for Daydreamers
   
-This is a User Management Tool for Business Users which manages User based in a Web-Application.
+This is a DayDream Management Tool for Daydreamers which manages daydreams based in a Web-Application published on Azure Cloud with Java as Backend and React as Frontend.
 
 [![License](https://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -29,15 +29,13 @@ This is a User Management Tool for Business Users which manages User based in a 
 The system enables business administrators to efficiently manage user accounts, permissions, and roles across the organization. It provides a centralized platform for user provisioning, authentication, and access control with role-based authorization.
 
 ### User Stories
-1. As an Admin, I want to create new user accounts so that I can add employees to the system.
-2. As an Admin, I want to list all user accounts so that I can see all users in the system.
-3. As an Admin, I want to list all locations along with the number of users assigned to each so that I can understand user distribution by location.
-4. As an Admin, I want to update user information so that I can keep employee data up to date.
-5. As an Admin, I want to deactivate or delete user accounts so that I can manage inactive employees.
-6. As an Admin, I want to reset user passwords so that I can help users regain access to their accounts.
-7. As an Admin, I want to map a user account to a working location so that I can track where employees are based.
-8. As an Admin, I want to view user activity logs so that I can audit and monitor system usage.
-9. As a User, I want to change my password so that I can maintain account security.
+1. As a Visitor, I want to sign up with my username, email, and password so that I can create my own DayDream account.
+2. As a Registered User, I want to log in securely so that I can access my personal daydream feed.
+3. As a User, I want to create a daydream with title, description, and mood so that I can capture my ideas and feelings.
+4. As a User, I want to set my daydream visibility to public or private so that I can control who can see my content.
+5. As a User, I want to add tags to my daydreams so that I can organize and find related thoughts more easily.
+6. As a User, I want to browse all shared daydreams so that I can discover what others are dreaming about.
+7. As a User, I want to comment on daydreams so that I can interact with the community and discuss ideas.
 
 ### Use Case
 
@@ -67,7 +65,7 @@ Starting from the home page, we can visit different pages. Available public page
 
 The `ch.fhnw.dream.data.domain` package contains the following domain objects / entities including getters and setters:
 
-![](images/domain-model.png)
+![](images/class-diagram.png)
 
 ### Business Logic 
 > 🚧: Describe the business logic for **at least one business service** in detail. If available, show the expected path and HTPP method. The remaining documentation of APIs shall be made available in the swagger endpoint. The default Swagger UI page is available at /swagger-ui.html.

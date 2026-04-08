@@ -1,28 +1,32 @@
-@startuml User Management Use Cases
+@startuml DayDream Use Cases
 skinparam backgroundColor #FEFEFE
 left to right direction
 
-actor Admin
-actor User
 
-package "User Management System" {
-  usecase UC1 as "List All Users"
-  usecase UC2 as "View Location Distribution"
-  usecase UC3 as "Update User Information"
-  usecase UC4 as "Manage User Accounts"
-  usecase UC5 as "Reset Password"
-  usecase UC6 as "Assign Working Location"
-  usecase UC7 as "View Activity Logs"
-  usecase UC8 as "Change Password"
+actor "User" as RegisteredUser
+
+rectangle "DayDream Application" {
+  usecase UC1 as "Sign Up"
+  usecase UC2 as "Log In"
+  usecase UC3 as "Create Daydream\n(Title, Description, Mood)"
+  usecase UC4 as "Set Visibility\n(Public/Private)"
+  usecase UC5 as "Add Tags to Daydream"
+  usecase UC6 as "Browse Shared Daydreams"
+  usecase UC7 as "Comment on Daydreams"
 }
 
-Admin --> UC1
-Admin --> UC2
-Admin --> UC3
-Admin --> UC4
-Admin --> UC5
-Admin --> UC6
-Admin --> UC7
-User --> UC8
+RegisteredUser --> UC1
+RegisteredUser --> UC2
+RegisteredUser --> UC3
+RegisteredUser --> UC4
+RegisteredUser --> UC5
+RegisteredUser --> UC6
+RegisteredUser --> UC7
+
+UC3 ..> UC4 : <<include>>
+UC3 ..> UC5 : <<include>>
+UC7 ..> UC2 : <<include>>
+UC3 ..> UC2 : <<include>>
+UC6 ..> UC2 : <<include>>
 
 @enduml
