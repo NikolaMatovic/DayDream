@@ -11,5 +11,6 @@ import ch.fhnw.dream.data.domain.User;
 
 @Repository
 public interface DaydreamRepository extends JpaRepository<Daydream, Long> {
-
+	List<Daydream> findByVisibility(ch.fhnw.dream.data.domain.Visibility visibility);
+	List<Daydream> findByUser(User user);
 }

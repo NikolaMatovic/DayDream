@@ -11,7 +11,6 @@ package "ch.fhnw.dream.data.domain" {
         - username: String
         - email: String
         - passwordHash: String
-        - displayName: String
         - createdAt: LocalDateTime
         - daydreams: List<Daydream>
         - comments: List<Comment>

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ch.fhnw.dream.data.domain.Comment;
 import ch.fhnw.dream.data.domain.Daydream;
 import ch.fhnw.dream.data.domain.User;
+import ch.fhnw.dream.data.domain.Visibility;
+import ch.fhnw.dream.data.domain.Tag;
 import ch.fhnw.dream.data.repository.CommentRepository;
 import ch.fhnw.dream.data.repository.DaydreamRepository;
 import ch.fhnw.dream.data.repository.UserRepository;
@@ -48,5 +50,56 @@ public class DaydreamService {
         comment.setContent(content);
 
         return commentRepository.save(comment);
+    }
+
+        public List<Daydream> getDaydreamsByVisibility(Visibility visibility) {
+        return daydreamRepository.findByVisibility(visibility);
+    }
+
+    public List<Daydream> getDaydreamsByUser(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new IllegalArgumentException("Benutzer nicht gefunden"));
+        return daydreamRepository.findByUser(user);
+    }
+
+    public Daydream updateDaydream(Long id, Object requestObj, String username) {
+        Daydream daydream = daydreamRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Daydream nicht gefunden"));
+        if (!daydream.getUser().getUsername().equals(username)) {
+            throw new SecurityException("Nicht berechtigt");
+        }
+        // Cast and update fields
+        if (requestObj instanceof ch.fhnw.dream.controller.DaydreamController.CreateDaydreamRequest request) {
+            if (request.getTitle() != null) daydream.setTitle(request.getTitle().trim());
+            if (request.getDescription() != null) daydream.setDescription(request.getDescription().trim());
+            if (request.getMood() != null) daydream.setMood(request.getMood().trim());
+            if (request.getVisibility() != null) {
+                try {
+                    daydream.setVisibility(Visibility.valueOf(request.getVisibility().trim().toUpperCase()));
+                } catch (Exception ignored) {}
+            }
+            // Tags update (optional, simple replace)
+            if (request.getTags() != null) {
+                daydream.getTags().clear();
+                for (String tagName : request.getTags()) {
+                    if (tagName != null && !tagName.trim().isEmpty()) {
+                        Tag tag = new Tag();
+                        tag.setDaydream(daydream);
+                        tag.setName(tagName.trim());
+                        daydream.getTags().add(tag);
+                    }
+                }
+            }
+        }
+        return daydreamRepository.save(daydream);
+    }
+
+    public void deleteDaydream(Long id, String username) {
+        Daydream daydream = daydreamRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Daydream nicht gefunden"));
+        if (!daydream.getUser().getUsername().equals(username)) {
+            throw new SecurityException("Nicht berechtigt");
+        }
+        daydreamRepository.delete(daydream);
     }
 }

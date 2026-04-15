@@ -31,9 +31,6 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Column(length = 100)
-    private String displayName;
-
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -79,14 +76,6 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public LocalDateTime getCreatedAt() {

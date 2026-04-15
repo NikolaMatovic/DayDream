@@ -59,11 +59,6 @@ public class AuthController {
             User user = new User();
             user.setUsername(request.getUsername().trim());
             user.setEmail(request.getEmail().trim());
-            user.setDisplayName(
-                request.getDisplayName() == null || request.getDisplayName().isBlank()
-                    ? request.getUsername().trim()
-                    : request.getDisplayName().trim()
-            );
             user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
             User savedUser = userService.createUser(user);
@@ -73,7 +68,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(
                 savedUser.getId(),
                 savedUser.getUsername(),
-                savedUser.getDisplayName(),
                 "USER",
                 "Registrierung erfolgreich"
             ));
@@ -110,7 +104,6 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(
                 user.getId(),
                 user.getUsername(),
-                user.getDisplayName(),
                 role,
                 "Login erfolgreich"
             ));
@@ -162,7 +155,6 @@ public class AuthController {
         private String username;
         private String email;
         private String password;
-        private String displayName;
 
         public String getUsername() {
             return username;
@@ -187,27 +179,17 @@ public class AuthController {
         public void setPassword(String password) {
             this.password = password;
         }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-
-        public void setDisplayName(String displayName) {
-            this.displayName = displayName;
-        }
     }
 
     public static class AuthResponse {
         private Long userId;
         private String username;
-        private String displayName;
         private String role;
         private String message;
 
-        public AuthResponse(Long userId, String username, String displayName, String role, String message) {
+        public AuthResponse(Long userId, String username, String role, String message) {
             this.userId = userId;
             this.username = username;
-            this.displayName = displayName;
             this.role = role;
             this.message = message;
         }
@@ -218,10 +200,6 @@ public class AuthController {
 
         public String getUsername() {
             return username;
-        }
-
-        public String getDisplayName() {
-            return displayName;
         }
 
         public String getRole() {
