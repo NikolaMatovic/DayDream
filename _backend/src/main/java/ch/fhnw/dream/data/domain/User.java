@@ -31,19 +31,12 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Column(length = 100)
-    private String displayName;
-
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("user-daydreams")
     private List<Daydream> daydreams = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("user-comments")
-    private List<Comment> comments = new ArrayList<>();
 
     public User() {
         this.createdAt = LocalDateTime.now();
@@ -81,14 +74,6 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -103,13 +88,5 @@ public class User {
 
     public void setDaydreams(List<Daydream> daydreams) {
         this.daydreams = daydreams;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }

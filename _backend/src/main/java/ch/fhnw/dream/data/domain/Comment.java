@@ -1,7 +1,6 @@
 package ch.fhnw.dream.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +26,8 @@ public class Comment {
     @JsonBackReference("daydream-comments")
     private Daydream daydream;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnoreProperties({"daydreams", "comments"})
-    private User user;
+    @Column(nullable = false, length = 50)
+    private String authorUsername;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -63,12 +60,12 @@ public class Comment {
         this.daydream = daydream;
     }
 
-    public User getUser() {
-        return user;
+    public String getAuthorUsername() {
+        return authorUsername;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
     }
 
     public String getContent() {

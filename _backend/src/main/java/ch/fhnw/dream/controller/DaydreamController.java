@@ -27,9 +27,48 @@ public class DaydreamController {
     @Autowired
     private UserService userService;
 
+
+    // Get all public daydreams
+    @GetMapping("/public")
+    public List<Daydream> getPublicDaydreams() {
+        return daydreamService.getDaydreamsByVisibility(Visibility.PUBLIC);
+    }
+
+    // Get all daydreams for the logged-in user (personal feed)
+    @GetMapping("/my")
+    public List<Daydream> getMyDaydreams(Authentication authentication) {
+        return daydreamService.getDaydreamsByUser(authentication.getName());
+    }
+
+    // Get all daydreams (admin or for demo)
     @GetMapping("/all")
     public List<Daydream> getAllDaydreams() {
         return daydreamService.getAllDaydreams();
+    }
+    // Update a daydream (title, description, mood, visibility, tags)
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateDaydream(@PathVariable Long id, @RequestBody CreateDaydreamRequest request, Authentication authentication) {
+        try {
+            Daydream updated = daydreamService.updateDaydream(id, request, authentication.getName());
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
+    // Delete a daydream
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDaydream(@PathVariable Long id, Authentication authentication) {
+        try {
+            daydreamService.deleteDaydream(id, authentication.getName());
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(e.getMessage()));
+        }
     }
 
     @PostMapping

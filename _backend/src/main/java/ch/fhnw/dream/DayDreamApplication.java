@@ -13,6 +13,8 @@ import ch.fhnw.dream.business.service.UserService;
 import ch.fhnw.dream.business.service.DaydreamService;
 
 import ch.fhnw.dream.data.domain.*;
+import ch.fhnw.dream.data.repository.DaydreamRepository;
+import ch.fhnw.dream.data.repository.UserRepository;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -27,106 +29,142 @@ public class DayDreamApplication {
     }
 
     @Bean
-    CommandLineRunner initData(UserService userService, DaydreamService daydreamService)  {
+    CommandLineRunner initData(UserService userService, DaydreamService daydreamService, DaydreamRepository daydreamRepository, UserRepository userRepository)  {
         return args -> {
-            User user1 = createUserIfMissing(
-                userService,
-                "nikola",
-                "nikola@daydream.com",
-                "password",
-                "Nikola User"
-            );
+            daydreamRepository.deleteAll();
+            userRepository.deleteAll();
 
-            User user2 = createUserIfMissing(
-                userService,
-                "luca",
-                "luca@daydream.com",
-                "password",
-                "Luca User"
-            );
+            User luca = createSeedUser(userService, "lucafratello", "luca.masella@students.fhnw.ch", "password");
+            User nikola = createSeedUser(userService, "nidzolesko", "nikola.matovic@students.fhnw.ch", "password");
+            User jasin = createSeedUser(userService, "JasinJson", "jasin.jusufi@students.fhnw.ch", "password");
+            User silvan = createSeedUser(userService, "SilvanoHermano", "silvan.rebmann@students.fhnw.ch", "password");
 
-            createUserIfMissing(
-                userService,
-                "admin",
-                "admin@daydream.com",
-                "password",
-                "Admin User"
-            );
+            daydreamService.createDaydream(createSeedDaydream(
+                luca,
+                "Midnight City Sprint",
+                "Racing neon trams through a silent city where every station tells a different story.",
+                "Electric",
+                Visibility.PUBLIC,
+                List.of("city", "night", "speed"),
+                LocalDateTime.of(2026, 3, 3, 21, 10),
+                LocalDateTime.of(2026, 3, 4, 7, 25)
+            ));
 
+            daydreamService.createDaydream(createSeedDaydream(
+                luca,
+                "Grandma's Secret Bakery",
+                "A hidden bakery appears only at dawn and serves pastries that replay childhood memories.",
+                "Nostalgic",
+                Visibility.PRIVATE,
+                List.of("bakery", "memories", "dawn"),
+                LocalDateTime.of(2026, 3, 6, 6, 45),
+                LocalDateTime.of(2026, 3, 6, 8, 5)
+            ));
 
-                Daydream daydream1 = new Daydream();
-                daydream1.setTitle("Beach Vacation");
-                daydream1.setDescription("A relaxing day at the beach");
-                daydream1.setUser(user1);
+            daydreamService.createDaydream(createSeedDaydream(
+                nikola,
+                "Cloud Stadium Final",
+                "Playing the final match inside a floating stadium while thunder keeps rhythm for the crowd.",
+                "Motivated",
+                Visibility.PUBLIC,
+                List.of("sports", "clouds", "final"),
+                LocalDateTime.of(2026, 3, 10, 19, 30),
+                LocalDateTime.of(2026, 3, 10, 22, 0)
+            ));
 
-                // Add comments to daydream1
-                Comment comment1 = new Comment();
-                comment1.setContent("Looks amazing! Wish I was there.");
-                comment1.setUser(user2);
-                comment1.setDaydream(daydream1);
+            daydreamService.createDaydream(createSeedDaydream(
+                nikola,
+                "The Last Lighthouse",
+                "Guarding an old lighthouse where each beam opens a portal to another coastline.",
+                "Mysterious",
+                Visibility.PRIVATE,
+                List.of("sea", "lighthouse", "portal"),
+                LocalDateTime.of(2026, 3, 12, 23, 15),
+                LocalDateTime.of(2026, 3, 13, 1, 40)
+            ));
 
-                Comment comment2 = new Comment();
-                comment2.setContent("Don't forget sunscreen!");
-                comment2.setUser(user2);
-                comment2.setDaydream(daydream1);
+            daydreamService.createDaydream(createSeedDaydream(
+                jasin,
+                "Paper Plane Republic",
+                "Building a republic where every law is delivered by paper planes over giant library roofs.",
+                "Playful",
+                Visibility.PUBLIC,
+                List.of("library", "paper-plane", "community"),
+                LocalDateTime.of(2026, 3, 15, 14, 5),
+                LocalDateTime.of(2026, 3, 15, 16, 55)
+            ));
 
-                daydream1.setComments(List.of(comment1, comment2));
+            daydreamService.createDaydream(createSeedDaydream(
+                jasin,
+                "Silent Arcade",
+                "An arcade where games are controlled by gestures and every win paints stars on the walls.",
+                "Curious",
+                Visibility.PUBLIC,
+                List.of("arcade", "stars", "games"),
+                LocalDateTime.of(2026, 3, 17, 18, 20),
+                LocalDateTime.of(2026, 3, 17, 20, 10)
+            ));
 
-                // Add tags to daydream1
-                Tag tag1 = new Tag();
-                tag1.setName("beach");
-                tag1.setDaydream(daydream1);
+            daydreamService.createDaydream(createSeedDaydream(
+                silvan,
+                "Forest Orchestra",
+                "A hidden orchestra in the forest plays with instruments carved from moonlit trees.",
+                "Inspired",
+                Visibility.PUBLIC,
+                List.of("forest", "music", "night"),
+                LocalDateTime.of(2026, 3, 20, 5, 40),
+                LocalDateTime.of(2026, 3, 20, 7, 0)
+            ));
 
-                Tag tag2 = new Tag();
-                tag2.setName("relax");
-                tag2.setDaydream(daydream1);
-
-                daydream1.setTags(List.of(tag1, tag2));
-
-                Daydream daydream2 = new Daydream();
-                daydream2.setTitle("Mountain Hiking");
-                daydream2.setDescription("Exploring mountain trails");
-                daydream2.setUser(user2);
-
-                // Add comments to daydream2
-                Comment comment3 = new Comment();
-                comment3.setContent("Watch out for bears!");
-                comment3.setUser(user1);
-                comment3.setDaydream(daydream2);
-
-                daydream2.setComments(List.of(comment3));
-
-                // Add tags to daydream2
-                Tag tag3 = new Tag();
-                tag3.setName("mountain");
-                tag3.setDaydream(daydream2);
-
-                Tag tag4 = new Tag();
-                tag4.setName("adventure");
-                tag4.setDaydream(daydream2);
-
-                daydream2.setTags(List.of(tag3, tag4));
-
-                daydreamService.createDaydream(daydream1);
-                daydreamService.createDaydream(daydream2);
+            daydreamService.createDaydream(createSeedDaydream(
+                silvan,
+                "Snowglobe Workshop",
+                "Designing custom snowglobes that capture moments from future adventures.",
+                "Hopeful",
+                Visibility.PRIVATE,
+                List.of("workshop", "snowglobe", "future"),
+                LocalDateTime.of(2026, 3, 22, 11, 35),
+                LocalDateTime.of(2026, 3, 22, 13, 25)
+            ));
 
         };
     }
 
-    private User createUserIfMissing(
-            UserService userService,
-            String username,
-            String email,
-            String password,
-            String displayName
+    private User createSeedUser(UserService userService, String username, String email, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPasswordHash(PASSWORD_ENCODER.encode(password));
+        return userService.createUser(user);
+    }
+
+    private Daydream createSeedDaydream(
+            User user,
+            String title,
+            String description,
+            String mood,
+            Visibility visibility,
+            List<String> tagNames,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
     ) {
-        return userService.getUserByUsername(username).orElseGet(() -> {
-            User user = new User();
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setDisplayName(displayName);
-            user.setPasswordHash(PASSWORD_ENCODER.encode(password));
-            return userService.createUser(user);
-        });
+        Daydream daydream = new Daydream();
+        daydream.setUser(user);
+        daydream.setTitle(title);
+        daydream.setDescription(description);
+        daydream.setMood(mood);
+        daydream.setVisibility(visibility);
+        daydream.setCreatedAt(createdAt);
+        daydream.setUpdatedAt(updatedAt);
+
+        List<Tag> tags = tagNames.stream().map(name -> {
+            Tag tag = new Tag();
+            tag.setDaydream(daydream);
+            tag.setName(name);
+            return tag;
+        }).toList();
+
+        daydream.setTags(tags);
+        return daydream;
     }
 }
