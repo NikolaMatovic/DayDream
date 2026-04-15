@@ -193,12 +193,19 @@ The system enables users to create and manage personal daydreams with customizab
 The Prototype Design phase focuses on creating visual mockups and interactive wireframes for the DayDream application. The prototype includes:
 
 **Home Page**: Landing page with navigation to login/register
+
 **Dashboard**: Personal feed where users can view, filter, and switch between their public, private, or all daydreams
+
 **Create/Edit Daydream Page**: Form interface for creating new daydreams or editing existing ones, including title, description, mood, and visibility (public/private)
+
 **Public Feed**: Browse all public daydreams from the community, with filtering and search options
+
 **Detail View**: Individual daydream display with the ability to view and add comments (if public), and see all related interactions
+
 **User Profile**: Manage account settings, view personal information, and control privacy/visibility preferences
+
 **Commenting**: Users can comment on public daydreams, with validation for empty comments and error handling
+
 **Visibility Controls**: Users can set or update the visibility of each daydream (public/private) at creation or later
 
 The prototype incorporates the Corporate Identity guidelines with a cohesive color scheme, typography, and responsive design for optimal user experience across devices.
