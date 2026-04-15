@@ -41,12 +41,9 @@ public class DaydreamService {
         Daydream daydream = daydreamRepository.findById(daydreamId)
             .orElseThrow(() -> new IllegalArgumentException("Daydream nicht gefunden"));
 
-        User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new IllegalArgumentException("Benutzer nicht gefunden"));
-
         Comment comment = new Comment();
         comment.setDaydream(daydream);
-        comment.setUser(user);
+        comment.setAuthorUsername(username);
         comment.setContent(content);
 
         return commentRepository.save(comment);

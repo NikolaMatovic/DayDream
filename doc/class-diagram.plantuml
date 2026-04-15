@@ -13,7 +13,6 @@ package "ch.fhnw.dream.data.domain" {
         - passwordHash: String
         - createdAt: LocalDateTime
         - daydreams: List<Daydream>
-        - comments: List<Comment>
     }
 
     class Daydream {
@@ -32,7 +31,7 @@ package "ch.fhnw.dream.data.domain" {
     class Comment {
         - id: Long
         - daydream: Daydream
-        - user: User
+        - authorUsername: String
         - content: String
         - createdAt: LocalDateTime
     }
@@ -50,9 +49,8 @@ package "ch.fhnw.dream.data.domain" {
 }
 
 User "1" <-- "0..*" Daydream : user
-User "1" <-- "0..*" Comment : user
 Daydream "1" <-- "0..*" Comment : daydream
-Daydream "1" <-- "0..*" Tag : daydream
+Daydream "1" <-- "0..*" Tag : daydreamy
 Daydream --> Visibility
 
 @enduml

@@ -38,10 +38,6 @@ public class User {
     @JsonManagedReference("user-daydreams")
     private List<Daydream> daydreams = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("user-comments")
-    private List<Comment> comments = new ArrayList<>();
-
     public User() {
         this.createdAt = LocalDateTime.now();
     }
@@ -92,13 +88,5 @@ public class User {
 
     public void setDaydreams(List<Daydream> daydreams) {
         this.daydreams = daydreams;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }

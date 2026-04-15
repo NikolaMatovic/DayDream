@@ -109,7 +109,7 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="page-grid">
+    <div className={`page-grid${editingDream ? '' : ' page-grid-single'}`}>
       <section className="panel feed-panel">
         <div className="section-heading split-heading">
           <div>
@@ -188,18 +188,7 @@ export default function FeedPage() {
             setComposerError('');
           }}
         />
-      ) : (
-        <aside className="panel side-panel">
-          <p className="eyebrow">Personal feed</p>
-          <h2>Use case support</h2>
-          <ul className="feature-list compact-list">
-            <li>Browse public daydreams</li>
-            <li>Switch to your own feed</li>
-            <li>Edit or delete your own entries</li>
-            <li>Open details and comment on public dreams</li>
-          </ul>
-        </aside>
-      )}
+      ) : null}
     </div>
   );
 }

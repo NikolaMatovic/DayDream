@@ -144,7 +144,7 @@ export default function DaydreamDetailPage() {
             daydream.comments.map((entry) => (
               <article key={entry.id} className="comment-card">
                 <div className="comment-head">
-                  <strong>{entry.user?.username || user?.username}</strong>
+                  <strong>{entry.authorUsername || 'Unknown user'}</strong>
                   <span>{formatDate(entry.createdAt)}</span>
                 </div>
                 <p>{entry.content}</p>

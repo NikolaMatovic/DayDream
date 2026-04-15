@@ -229,6 +229,10 @@ textarea {
   margin: 3rem 0;
 }
 
+.hero-card-single {
+  grid-template-columns: 1fr;
+}
+
 .hero-copy h1,
 .section-heading h1,
 .auth-panel h1,
@@ -312,6 +316,10 @@ textarea {
 
 .page-grid {
   grid-template-columns: 1.7fr 1fr;
+}
+
+.page-grid-single {
+  grid-template-columns: 1fr;
 }
 
 .detail-layout {
