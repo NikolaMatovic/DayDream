@@ -67,17 +67,126 @@ The system enables users to create and manage personal daydreams with customizab
 ### Use Case
 
 ![](images/use-case.png)
-- UC-1 [Register Account]: Visitor can create a new account using username, email, and password.
-- UC-2 [Log In]: User can log in using their email and password to access their account.
-- UC-3 [Log Out]: User can log out to securely end their session.
-- UC-4 [Browse Public Daydreams]: User can view all public daydreams shared by other users.
-- UC-5 [Create Daydream]: User can create a new daydream with a title, description, and mood.
-- UC-6 [Update Daydream]: User can edit their existing daydream’s title, description, and mood.
-- UC-7 [Delete Daydream]: User can delete their own daydream.
-- UC-8 [Set Daydream Visibility]: User can set a daydream as public or private.
-- UC-9 [View Personal Feed]: User can view only their own daydreams in a personal feed.
-- UC-10 [Comment on Daydream]: User can comment on public daydreams to interact with others.
 
+
+## Use Cases
+
+### UC-1: Register Account
+**Actor:** Visitor  
+**Precondition:** User is not logged in
+**Main Flow:**
+1. Visitor selects “Register”
+2. System displays registration form
+3. Visitor enters username, email, and password
+4. Visitor submits the form
+5. System validates input (email format, password strength, uniqueness)
+6. System creates account
+7. System confirms registration and logs user in
+**Alternative Flow:**
+- Invalid input → show error message
+- Email already exists → prompt user to log in
+
+### UC-2: Log In
+**Actor:** User  
+**Precondition:** User has a registered account
+**Main Flow:**
+1. User selects “Log In”
+2. System displays login form
+3. User enters email and password
+4. User submits credentials
+5. System validates credentials
+6. System grants access and redirects to dashboard
+**Alternative Flow:**
+- Invalid credentials → show error message
+
+### UC-3: Log Out
+**Actor:** User  
+**Precondition:** User is logged in
+**Main Flow:**
+1. User selects “Log Out”
+2. System terminates session
+3. System redirects to Login Form
+
+### UC-4: Browse Public Daydreams
+**Actor:** User  
+**Precondition:** User is logged in
+**Main Flow:**
+1. User navigates to “Public Feed”
+2. System retrieves public daydreams
+3. System displays list of daydreams
+4. User scrolls and views content
+
+### UC-5: Create Daydream
+**Actor:** User  
+**Precondition:** User is logged in
+**Main Flow:**
+1. User selects “Create Daydream”
+2. System displays creation form
+3. User enters title, description, and mood
+4. User selects visibility (public/private)
+5. User submits form
+6. System validates input
+7. System saves daydream
+8. System confirms creation
+**Alternative Flow:**
+- Missing/invalid fields → show error message
+
+### UC-6: Update Daydream
+**Actor:** User  
+**Precondition:** User owns the daydream
+**Main Flow:**
+1. User selects a daydream
+2. User clicks “Edit”
+3. System displays editable form
+4. User modifies title, description, or mood
+5. User submits changes
+6. System validates input
+7. System updates daydream
+8. System confirms update
+**Alternative Flow:**
+- Unauthorized access → deny action
+
+### UC-7: Delete Daydream
+**Actor:** User  
+**Precondition:** User owns the daydream
+**Main Flow:**
+1. User selects a daydream
+2. User clicks “Delete”
+3. System asks for confirmation
+4. User confirms deletion
+5. System deletes daydream
+6. System updates feed
+
+### UC-8: Set Daydream Visibility
+**Actor:** User  
+**Precondition:** User owns the daydream
+**Main Flow:**
+1. User selects a daydream
+2. User chooses visibility option (public/private)
+3. System updates visibility setting
+4. System confirms change
+
+### UC-9: View Personal Feed
+**Actor:** User  
+**Precondition:** User is logged in
+**Main Flow:**
+1. User navigates to “My Daydreams”
+2. System retrieves user’s daydreams
+3. System displays personal feed
+4. User can switch between viewing public, private, or both types of daydreams in their feed
+
+### UC-10: Comment on Daydream
+**Actor:** User  
+**Precondition:** User is logged in and viewing a public daydream
+**Main Flow:**
+1. User opens a public daydream
+2. User enters a comment
+3. User submits comment
+4. System validates input
+5. System saves comment
+6. System displays comment under the post
+**Alternative Flow:**
+- Empty comment → show error message
 ## Design
 ### Prototype Design
 
