@@ -192,22 +192,19 @@ The system enables users to create and manage personal daydreams with customizab
 
 The Prototype Design phase focuses on creating visual mockups and interactive wireframes for the DayDream application. The prototype includes:
 
-- **Home Page**: Landing page with navigation to login/register
-- **Dashboard**: Personal feed displaying user's daydreams
-- **Create/Edit Page**: Form interface for daydream creation and updates
-- **Public Feed**: Browse all public daydreams with filtering options
-- **Detail View**: Individual daydream display with comments section
-- **User Profile**: Account settings and privacy controls
+**Home Page**: Landing page with navigation to login/register
+**Dashboard**: Personal feed where users can view, filter, and switch between their public, private, or all daydreams
+**Create/Edit Daydream Page**: Form interface for creating new daydreams or editing existing ones, including title, description, mood, and visibility (public/private)
+**Public Feed**: Browse all public daydreams from the community, with filtering and search options
+**Detail View**: Individual daydream display with the ability to view and add comments (if public), and see all related interactions
+**User Profile**: Manage account settings, view personal information, and control privacy/visibility preferences
+**Commenting**: Users can comment on public daydreams, with validation for empty comments and error handling
+**Visibility Controls**: Users can set or update the visibility of each daydream (public/private) at creation or later
 
 The prototype incorporates the Corporate Identity guidelines with a cohesive color scheme, typography, and responsive design for optimal user experience across devices.
 
 **Corporate Identity (implemented in frontend)**
 
-- **Color schema**: Main brand gradient is blue-violet (`#667eea` to `#764ba2`) used in authentication background, app header, and key buttons. Secondary action gradients are green (`#0f9d58` to `#36b37e`) for create actions and blue-violet (`#4f78e8` to `#6a5dd7`) for comment actions. Neutral white/light-gray surfaces are used for cards and forms.
-- **Typography**: A clean sans-serif system stack is used (`Segoe UI`, `Roboto`, `Oxygen`, `Ubuntu`, `Cantarell`) for readability and platform consistency. Titles are visually emphasized while form and content text remain compact and legible.
-- **Layout**: The UI follows a card-based structure. Authentication screens use a centered single-column form card; authenticated screens use a top navigation header and a constrained content container with feed cards and structured creation forms.
-- **UX and interaction**: Rounded inputs and buttons, hover elevation, visible focus states, disabled/loading states, and clear inline error messages create a consistent and user-friendly interaction pattern.
-- **Responsive design**: Breakpoints optimize the experience for smaller screens (header stacking, button resizing, and vertical form/comment layouts) to keep the app usable on mobile and desktop.
 
 ### Wireframe
 > 🚧: It is suggested to start with a wireframe. The wireframe focuses on the website structure (Sitemap planning), sketching the pages using Wireframe components (e.g., header, menu, footer) and UX. You can create a wireframe already with draw.io or similar tools. 
