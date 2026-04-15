@@ -1,5 +1,6 @@
 package ch.fhnw.dream.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -27,11 +28,20 @@ public class SecurityConfig {
                             "/v1/auth/**",           // Login/Signup public
                             "/",                      // React app root
                             "/index.html",
-                            "/static/**",            // React static files
+                            "/assets/**",            // Vite frontend assets
+                            "/favicon.ico",
                             "/swagger-ui.html",       // Swagger UI
                             "/v3/api-docs/**",        // API documentation
                             "/swagger-ui/**",         // Swagger UI resources
                             "/h2-console/**"          // H2 console
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                            "/login",
+                            "/signup",
+                            "/feed",
+                            "/create",
+                            "/profile",
+                            "/daydreams/**"
                         ).permitAll()
                         
                         // All other requests require authentication
