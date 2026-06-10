@@ -15,8 +15,9 @@ Users can:
 - [Design Decisions](#design-decisions)
 - [Implementation](#implementation)
 - [Installation](#installation)
-- [Project Management](#project-management)
 - [Links](#links)
+- [Deliverables Status](#deliverables-status)
+- [Project Management](#project-management)
 - [License](#license)
 
 ## Requirements Analysis
@@ -332,7 +333,7 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 
 ## Links
 
-- Running app: https://meinewebbapp-nidzo.azurewebsites.net/
+- Running app on the Azure Cloud☁️: https://meinewebbapp-nidzo.azurewebsites.net/
 - OpenAPI (Swagger UI): https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html
 - OpenAPI JSON: https://meinewebbapp-nidzo.azurewebsites.net/v3/api-docs
 - Presentation video: not yet ready, will be provided here after the video has been recorded
@@ -355,6 +356,8 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 | Jasin Jusufi | Backend implementation, API endpoints, service layer |
 | Silvan Rebmann | Frontend implementation, domain model, UI/UX |
 
+All members participated in planning, reviews, testing, and iterative improvements across both frontend and backend.
+
 ### Milestones
 
 | # | Milestone | Status |
@@ -371,15 +374,6 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 
 The team distributed responsibilities across architecture, design, backend, and frontend work while still collaborating on reviews and integration tasks. Progress and source code were managed through GitHub to keep version history and shared project information transparent. The README served as the central documentation artifact for requirements, design decisions, implementation details, and installation instructions.
 
-
-## Team
-
-- Nikola Matovic: defined the overall technical architecture, coordinated backend-frontend integration, handled deployment setup, and managed cloud environment configuration.
-- Luca Masella: led design decisions for user journeys and business case framing, contributed to requirement structuring, and supported validation of implemented features against use cases.
-- Jasin Jusufi: implemented core backend functionality, including API endpoints, service-layer logic, and data-access integration in the Spring Boot application.
-- Silvan Rebmann: implemented frontend views and interaction flow, contributed to domain-model alignment with UI behavior, and supported end-to-end testing of user-facing features.
-
-All members participated in planning, reviews, testing, and iterative improvements across both frontend and backend.
 
 ## License
 
