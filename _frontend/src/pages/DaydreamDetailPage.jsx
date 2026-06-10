@@ -92,7 +92,7 @@ export default function DaydreamDetailPage() {
   return (
     <div className="detail-layout">
       <section className="panel detail-panel">
-        <div className="section-heading">
+        <div className="section-heading split-heading">
           <div>
             <p className="eyebrow">Daydream detail</p>
             <h1>{daydream.title}</h1>

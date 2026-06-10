@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+const PREVIEW_COUNT = 3;
 
 function formatDate(value) {
   if (!value) return 'Unknown date';
@@ -11,6 +14,11 @@ export default function DaydreamCard({
   onEdit,
   onDelete,
 }) {
+  const comments = dream.comments ?? [];
+  const hasMore = comments.length > PREVIEW_COUNT;
+  const [expanded, setExpanded] = useState(false);
+  const visibleComments = expanded ? comments : comments.slice(0, PREVIEW_COUNT);
+
   return (
     <article className="dream-card">
       <div className="dream-card-top">
@@ -38,8 +46,32 @@ export default function DaydreamCard({
         <span>By {dream.user?.username || 'Unknown user'}</span>
         <span>{formatDate(dream.createdAt)}</span>
       </div>
+
+      {comments.length > 0 && (
+        <div className="card-comments">
+          <p className="card-comments-label">{comments.length} comment{comments.length !== 1 ? 's' : ''}</p>
+          {visibleComments.map((entry) => (
+            <div key={entry.id} className="card-comment">
+              <strong>{entry.authorUsername || 'Unknown'}</strong>
+              <span>{entry.content}</span>
+            </div>
+          ))}
+          {hasMore && (
+            <button
+              type="button"
+              className="ghost-button card-comments-toggle"
+              onClick={() => setExpanded((v) => !v)}
+            >
+              {expanded
+                ? 'Show less'
+                : `Show ${comments.length - PREVIEW_COUNT} more comment${comments.length - PREVIEW_COUNT !== 1 ? 's' : ''}`}
+            </button>
+          )}
+        </div>
+      )}
+
       <Link className="primary-link" to={`/daydreams/${dream.id}`}>
-        Open discussion
+        {dream.visibility === 'PUBLIC' ? 'Open discussion & comment' : 'View daydream'}
       </Link>
     </article>
   );

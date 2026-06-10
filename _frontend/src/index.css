@@ -385,6 +385,48 @@ textarea {
   white-space: pre-wrap;
 }
 
+/* ── Card comment preview ───────────────────────────────────────── */
+.card-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.card-comments-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 0.25rem;
+}
+
+.card-comment {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.card-comment strong {
+  white-space: nowrap;
+  color: var(--primary-dark);
+}
+
+.card-comment span {
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-comments-toggle {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  padding: 0.2rem 0;
+}
+
 .dream-meta,
 .comment-head,
 .profile-meta,

@@ -1,358 +1,332 @@
-# DayDream Management Tool for Daydreamers
-  
-This is a DayDream Management Tool for Daydreamers which manages daydreams based in a Web-Application published on Azure Cloud with Java as Backend and React as Frontend.
+# DayDream
 
-[![License](https://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+DayDream is a web application to create, manage, and share daydreams.
 
-#### Contents:
-- [Analysis](#analysis)
-  - [Scenario](#scenario)
-  - [User Stories](#user-stories)
-  - [Use Case](#use-case)
-- [Design](#design)
-  - [Prototype Design](#prototype-design)
-  - [Domain Design](#domain-design)
-  - [Business Logic](#business-logic)
+Users can:
+- sign up and log in
+- create, update, and delete their own daydreams
+- choose public or private visibility
+- comment on daydreams
+- access an admin page (admin role) for moderation tasks
+
+## Contents
+
+- [Project Context](#project-context)
+- [Team](#team)
+- [Scenario](#scenario)
+- [User Stories](#user-stories)
+- [Domain Model](#domain-model)
+- [Use Case Overview](#use-case-overview)
+- [Architecture](#architecture)
+- [Implemented Views](#implemented-views)
+- [Wireframes](#wireframes)
+- [Business Logic](#business-logic)
+- [API Summary](#api-summary)
+- [Security](#security)
 - [Implementation](#implementation)
-  - [Backend Technology](#backend-technology)
-  - [Frontend Technology](#frontend-technology)
+- [Execution](#execution)
+- [Demo Credentials](#demo-credentials-seed-data)
 - [Project Management](#project-management)
-  - [Roles](#roles)
-  - [Milestones](#milestones)
+- [Links](#links)
+- [License](#license)
 
-## Analysis
-### Analysis Overview
+## Project Context
 
-The DayDream Management Tool is a collaborative platform designed to enable users to capture, organize, and share their daydreams. The application serves as a digital space for creative expression and community interaction, allowing users to document personal thoughts while connecting with others who share similar interests.
+This project was developed for the FHNW Internet Technology group work assessment.
 
-**Key Features:**
-- User authentication and account management
-- Daydream creation, retrieval, updating, and deletion (CRUD operations)
-- Privacy controls with public/private visibility settings
-- Community engagement through comments and interactions
-- Personal feed management for individual content organization
+## Scenario
 
-**Target Users:**
-- Casual dreamers seeking a personal journal platform
-- Creative individuals wanting to share ideas with a community
-- Users interested in discovering and discussing others' perspectives
+The platform enables users to store personal ideas and optionally share them publicly.
+A user can keep daydreams private, publish selected content, and interact with the community through comments.
 
-**Core Value Proposition:**
-DayDream provides an intuitive, web-based solution for documenting and sharing creative thoughts with customizable privacy controls and community interaction features.
+## User Stories
 
-### Scenario
-The system enables users to create and manage personal daydreams with customizable privacy settings. It provides authentication, CRUD operations, and community interaction features allowing users to document creative thoughts, control visibility, and engage with other users through comments on public daydreams.
+### Core user stories
+1. As a user, I want to register so that I can create my own account.
+2. As a user, I want to log in so that I can access protected features.
+3. As a user, I want to browse public daydreams so that I can discover content.
+4. As a user, I want to create, edit, and delete my own daydreams.
+5. As a user, I want to choose visibility (public/private) for each daydream.
+6. As a user, I want to comment on daydreams.
+7. As an admin, I want to manage users and daydreams.
 
-### User Stories
-1. As a Visitor, I want to register with a username, email, and password so that I can create my own DayDream account.
+## Domain Model
 
-2. As a User, I want to log in with my email and password so that I can access my account.
+Main entities:
+- User
+- Daydream
+- Comment
+- Tag
+- Visibility (enum)
 
-3. As a User, I want to log out of my account so that I can securely end my session.
+Domain diagram:
 
-4. As a User, I want to browse all public daydreams so that I can discover what others are dreaming about.(READ)
+![Class Diagram](images/class-diagram.png)
 
-5. As a User, I want to create a daydream with a title, description, and mood so that I can capture my ideas and feelings.(CREATE)
+## Use Case Overview
 
-6. As a User, I want to update my daydream’s title, description, and mood so that I can keep my ideas and feelings up to date.(UPDATE)
+![Use Case Diagram](images/use-case.png)
 
-7. As a User, I want to delete my daydream so that I can remove content I no longer want to keep.(DELETE)
+## Architecture
 
-8. As a User, I want to set my daydream visibility to public or private so that I can control who can see my content.
+The solution follows a layered architecture over two tiers:
 
-9. As a User, I want to view only my personal daydream feed so that I can focus on my own content.
+- Frontend tier
+  - React + Vite
+  - route-based views and API consumption
 
-10. As a User, I want to comment on public daydreams so that I can interact with the community and discuss ideas.
+- Backend tier
+  - Spring Boot 3 + Java 17
+  - Controller layer
+  - Service layer (business rules)
+  - Repository layer (JPA)
+  - H2 database
 
-### Use Case
+## Implemented Views
 
-![](images/use-case.png)
+- Landing page
+- Login page
+- Signup page
+- Feed page
+- Create daydream page
+- Daydream detail page
+- Profile page
+- Admin page
 
+## Wireframes
 
-## Use Cases
+### 01 Landing
+![Landing Wireframe](images/wireframes/01_landing_page.png)
 
-### UC-1: Register Account
-**Actor:** Visitor  
-**Precondition:** User is not logged in
-**Main Flow:**
-1. Visitor selects “Register”
-2. System displays registration form
-3. Visitor enters username, email, and password
-4. Visitor submits the form
-5. System validates input (email format, password strength, uniqueness)
-6. System creates account
-7. System confirms registration and logs user in
-**Alternative Flow:**
-- Invalid input → show error message
-- Email already exists → prompt user to log in
+### 02 Login
+![Login Wireframe](images/wireframes/02_login_page.png)
 
-### UC-2: Log In
-**Actor:** User  
-**Precondition:** User has a registered account
-**Main Flow:**
-1. User selects “Log In”
-2. System displays login form
-3. User enters email and password
-4. User submits credentials
-5. System validates credentials
-6. System grants access and redirects to dashboard
-**Alternative Flow:**
-- Invalid credentials → show error message
+### 03 Signup
+![Signup Wireframe](images/wireframes/03_signup_page.png)
 
-### UC-3: Log Out
-**Actor:** User  
-**Precondition:** User is logged in
-**Main Flow:**
-1. User selects “Log Out”
-2. System terminates session
-3. System redirects to Login Form
+### 04 Protected Shell
+![Shell Wireframe](images/wireframes/04_shell_page.png)
 
-### UC-4: Browse Public Daydreams
-**Actor:** User  
-**Precondition:** User is logged in
-**Main Flow:**
-1. User navigates to “Public Feed”
-2. System retrieves public daydreams
-3. System displays list of daydreams
-4. User scrolls and views content
+### 05 Feed
+![Feed Wireframe](images/wireframes/05_feed_page.png)
 
-### UC-5: Create Daydream
-**Actor:** User  
-**Precondition:** User is logged in
-**Main Flow:**
-1. User selects “Create Daydream”
-2. System displays creation form
-3. User enters title, description, and mood
-4. User selects visibility (public/private)
-5. User submits form
-6. System validates input
-7. System saves daydream
-8. System confirms creation
-**Alternative Flow:**
-- Missing/invalid fields → show error message
+### 06 Create Daydream
+![Create Daydream Wireframe](images/wireframes/06_create_daydream_page.png)
 
-### UC-6: Update Daydream
-**Actor:** User  
-**Precondition:** User owns the daydream
-**Main Flow:**
-1. User selects a daydream
-2. User clicks “Edit”
-3. System displays editable form
-4. User modifies title, description, or mood
-5. User submits changes
-6. System validates input
-7. System updates daydream
-8. System confirms update
-**Alternative Flow:**
-- Unauthorized access → deny action
+### 07 Daydream Detail
+![Daydream Detail Wireframe](images/wireframes/07_daydream_detail_page.png)
 
-### UC-7: Delete Daydream
-**Actor:** User  
-**Precondition:** User owns the daydream
-**Main Flow:**
-1. User selects a daydream
-2. User clicks “Delete”
-3. System asks for confirmation
-4. User confirms deletion
-5. System deletes daydream
-6. System updates feed
+### 08 Profile
+![Profile Wireframe](images/wireframes/08_profile_page.png)
 
-### UC-8: Set Daydream Visibility
-**Actor:** User  
-**Precondition:** User owns the daydream
-**Main Flow:**
-1. User selects a daydream
-2. User chooses visibility option (public/private)
-3. System updates visibility setting
-4. System confirms change
+### 09 Admin
+![Admin Wireframe](images/wireframes/09_admin_page.png)
 
-### UC-9: View Personal Feed
-**Actor:** User  
-**Precondition:** User is logged in
-**Main Flow:**
-1. User navigates to “My Daydreams”
-2. System retrieves user’s daydreams
-3. System displays personal feed
-4. User can switch between viewing public, private, or both types of daydreams in their feed
+### 10 Navigation Map
+![Navigation Map](images/wireframes/10_navigation_map.png)
 
-### UC-10: Comment on Daydream
-**Actor:** User  
-**Precondition:** User is logged in and viewing a public daydream
-**Main Flow:**
-1. User opens a public daydream
-2. User enters a comment
-3. User submits comment
-4. System validates input
-5. System saves comment
-6. System displays comment under the post
-**Alternative Flow:**
-- Empty comment → show error message
-## Design
-### Prototype Design
+## Responsive Design
 
-The Prototype Design phase focuses on creating visual mockups and interactive wireframes for the DayDream application. The prototype includes:
+The application is designed to work on both desktop and mobile devices. The following mobile screenshot shows the create daydream view on a narrow screen, including responsive spacing, stacked form fields, and the compact mobile navigation.
 
-**Home Page**: Landing page with navigation to login/register
+![Responsive Mobile Screenshot](images/create_mobile.PNG)
 
-**Dashboard**: Personal feed where users can view, filter, and switch between their public, private, or all daydreams
+## Business Logic
 
-**Create/Edit Daydream Page**: Form interface for creating new daydreams or editing existing ones, including title, description, mood, and visibility (public/private)
+The service layer enforces the following business rules that reflect real application constraints:
 
-**Public Feed**: Browse all public daydreams from the community, with filtering and search options
+### Rule 1: Ownership enforcement on update and delete
 
-**Detail View**: Individual daydream display with the ability to view and add comments (if public), and see all related interactions
+A user can only update or delete a daydream they own. The `DaydreamService` checks the authenticated username against `daydream.getUser().getUsername()` before any mutating operation. Unauthorized access throws a `SecurityException`, resulting in HTTP 403.
 
-**User Profile**: Manage account settings, view personal information, and control privacy/visibility preferences
+**Endpoint:** `PUT /v1/dreams/{id}` and `DELETE /v1/dreams/{id}`  
+**Method:** `PUT` / `DELETE`  
+**Constraint:** Caller username must match the daydream owner.
 
-**Commenting**: Users can comment on public daydreams, with validation for empty comments and error handling
+### Rule 2: Admin-only moderation
 
-**Visibility Controls**: Users can set or update the visibility of each daydream (public/private) at creation or later
+Only users with role `ADMIN` may delete any daydream (including private ones) or delete user accounts. Enforced via Spring Security `@PreAuthorize("hasRole('ADMIN')")` on the `AdminController`.
 
-The prototype incorporates the Corporate Identity guidelines with a cohesive color scheme, typography, and responsive design for optimal user experience across devices.
+**Endpoint:** `DELETE /v1/admin/dreams/{id}` and `DELETE /v1/admin/users/{id}`  
+**Method:** `DELETE`  
+**Constraint:** Caller must carry role `ADMIN`.
 
-**Corporate Identity (implemented in frontend)**
+### Rule 3: Visibility filtering
 
+Public daydreams are accessible to any authenticated user. Private daydreams are only returned via the personal feed endpoint scoped to the authenticated user. `DaydreamService.getDaydreamsByVisibility(Visibility.PUBLIC)` ensures private content is never exposed through the public feed.
 
-### Wireframe
-> 🚧: It is suggested to start with a wireframe. The wireframe focuses on the website structure (Sitemap planning), sketching the pages using Wireframe components (e.g., header, menu, footer) and UX. You can create a wireframe already with draw.io or similar tools. 
+**Endpoint:** `GET /v1/dreams/public`  
+**Method:** `GET`  
+**Constraint:** Only `visibility=PUBLIC` daydreams are returned.
 
-TODO: START
-Starting from the home page, we can visit different pages. Available public pages are visible in the menu...
-TODO: END
+The full Swagger/OpenAPI documentation is available at:  
+[https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html](https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html)
 
-### Prototype
-> 🚧: A prototype can be designed using placeholder text/figures in Budibase. You don't need to connect the front-end to back-end in the early stages of the project development.
-TODO: START
-??
-TODO: END
+## API Summary
 
-### Domain Design
-The `ch.fhnw.dream.data.domain` package contains the following domain objects / entities including getters and setters:
+### Authentication
+- POST /v1/auth/signup
+- POST /v1/auth/login
 
-![](images/class-diagram.png)
+### Daydreams
+- GET /v1/dreams/public
+- GET /v1/dreams/my
+- GET /v1/dreams/all
+- POST /v1/dreams
+- PUT /v1/dreams/{id}
+- DELETE /v1/dreams/{id}
+- POST /v1/dreams/{daydreamId}/comments
 
-### Business Logic 
-> 🚧: Describe the business logic for **at least one business service** in detail. If available, show the expected path and HTPP method. The remaining documentation of APIs shall be made available in the swagger endpoint. The default Swagger UI page is available at /swagger-ui.html.
-TODO: START
-Based on the UC-4, there will be two offers and a standard offer. Given a location, a message is shown accordingly:
+### Admin
+- GET /v1/admin/users
+- DELETE /v1/admin/users/{id}
+- GET /v1/admin/dreams
+- DELETE /v1/admin/dreams/{id}
 
-- If the location is "Basel", the message is "10% off on all large pizzas!!!"
-- If the location is "Brugg", the message is "two for the price of One on all small pizzas!!!"
-- Otherwise, the message is "No special offer".
+## Security
 
-**Path**: [`/api/menu/?location="Basel"`] 
+The backend includes role-based authorization with protected admin endpoints.
+Current project version uses JWT-based bearer authentication for API access.
 
-**Param**: `value="location"` Admitted value: "Basel","Brugg".
-
-**Method:** `GET`
-TODO: END
 ## Implementation
-> 🚧: Briefly describe your technology stack, which apps were used and for what.
-TODO: START
-TODO: END
-### Backend Technology
-> 🚧: It is suggested to clone this repository, but you are free to start from fresh with a Spring Initializr. If so, describe if there are any changes to the PizzaRP e.g., different dependencies, versions & etc... Please, also describe how your database is set up. If you want a persistent or in-memory H2 database check [link](https://github.com/FHNW-INT/Pizzeria_Reference_Project/blob/main/pizza/src/main/resources/application.properties). If you have placeholder data to initialize at the app, you may use a variation of the method **initPlaceholderData()** available at [link](https://github.com/FHNW-INT/Pizzeria_Reference_Project/blob/main/pizza/src/main/java/ch/fhnw/pizza/PizzaApplication.java).
-TODO: START
-TODO: END
 
-This Web application is relying on [Spring Boot](https://projects.spring.io/spring-boot) and the following dependencies:
+The application follows a three-layer, two-tier architecture:
 
-- [Spring Boot](https://projects.spring.io/spring-boot)
-- [Spring Data](https://projects.spring.io/spring-data)
-- [Java Persistence API (JPA)](http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html)
-- [H2 Database Engine](https://www.h2database.com)
+- **Frontend** (React + Vite): Single-page application consuming REST APIs. Route-based views, protected routes, role-based navigation, and local JWT token handling.
+- **Controller layer** (Spring Boot): REST endpoints for auth, daydreams, comments, users, and admin operations. Input validation at the API boundary.
+- **Service layer** (Spring Boot): Business rule enforcement, ownership checks, visibility filtering.
+- **Repository layer** (Spring Data JPA): Database access via JPA repositories.
+- **Database** (H2 in-memory): Seeded on startup with demo users and daydream content.
 
-To bootstrap the application, the [Spring Initializr](https://start.spring.io/) has been used.
+The frontend communicates with the backend exclusively through REST API calls. Authentication uses JWT bearer tokens — the token is stored locally after login and attached to every subsequent API request.
 
-Then, the following further dependencies have been added to the project `pom.xml`:
+The full-code frontend approach (React instead of a low-code tool) was chosen because the required functionality — protected routes, role-based rendering, and inline edit composer — could not be achieved with a low-code tool without significant limitations.
 
-- DB:
-```XML
-<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-</dependency>
-```
+## Technology Stack
 
-- SWAGGER:
-```XML
-   <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>2.3.0</version>
-   </dependency>
-```
+### Backend
+- Java 17
+- Spring Boot 3.2.2
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- Spring OAuth2 Resource Server
+- Springdoc OpenAPI
+- H2 database
 
-### Frontend Technology
-> 🚧: Describe your views and what APIs is used on which view. If you don't have access to the Internet Technology class Budibase environment(https://inttech.budibase.app/), please write to Devid on MS teams.
+### Frontend
+- React 18
+- React Router
+- Vite
+- CSS
 
-TODO: START
-TODO: END
+## Run Locally
 
+### Prerequisites
+- Java 17
+- Node.js 18+ (recommended)
+- npm
 
-This Web application was developed using Budibase and it is available for preview at https://inttech.budibase.app/app/pizzeria. 
+### Backend
+From _backend:
+
+1. Build and run with Maven wrapper
+   - ./mvnw spring-boot:run
+
+or
+
+2. Build and run with Docker
+   - docker build -t daydream-backend .
+   - docker run -p 8080:8080 daydream-backend
+
+### Frontend
+From _frontend:
+
+1. Install dependencies
+   - npm install
+2. Start development server
+   - npm run dev
 
 ## Execution
-> 🚧: Please describe how to execute your app and what configurations must be changed to run it. 
-TODO: START
-beschreiben bettrefend onenote wie man es lokal zum laufen bringt. 
-TODO: END
-**The codespace URL of this Repo is subject to change.** Therefore, the Budibase PizzaRP webapp is not going to show any data in the view, when the URL is not updated or the codespace is offline. Follow these steps to start the webservice and reconnect the webapp to the new webservice url. 
 
-> 🚧: This is a shortened description for example purposes. A complete tutorial will be provided in a dedicated lecture.
-TODO: START
-TODO: END
-1. Clone PizzaRP in a new repository.
-2. Start your codespace (see video guide at: [link](https://www.youtube.com/watch?v=_W9B7qc9lVc&ab_channel=GitHub))
-3. Run the PizzaRP main available at PizzaApplication.java on your own codespace.
-4. Set your app with a public port, see the guide at [link](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace).
-5. Create an own Budibase app, you can export/import the existing Pizzeria app. Guide available at [link](https://docs.budibase.com/docs/export-and-import-apps).
-6. Update the pizzeria URL in the datasource and publish your app.
+### Running app (deployed)
 
-### Deployment to a PaaS
-> 🚧: Deployment to PaaS is optional but recommended as it will make your application (backend) accessible without server restart and through a unique, constantly available link.  
-TODO: Start
-Hier beschreiben dass es auf azure free läuft unter welchem link und auch wenn es ins main gepushed wird.
-TODO: END
-Alternatively, you can deploy your application to a free PaaS like [Render](https://dashboard.render.com/register).
-1. Refer to the Dockerfile inside the application root (FHNW-INT/Pizzeria_Reference_Project/pizza).
-2. Adapt line 13 to the name of your jar file. The jar name should be derived from the details in the pom.xml as follows:<br>
-`{artifactId}-{version}.jar` 
-2. Login to Render using your GitHub credentials.
-3. Create a new Web Service and choose Build and deploy from a Git repository.
-4. Enter the link to your (public) GitHub repository and click Continue.
-5. Enter the Root Directory (name of the folder where pom.xml resides).
-6. Choose the Instance Type as Free/Hobby. All other details are default.
-7. Click on Create Web Service. Your app will undergo automatic build and deployment. Monitor the logs to view the progress or error messages. The entire process of Build+Deploy might take several minutes.
-8. After successful deployment, you can access your backend using the generated unique URL (visible on top left under the name of your web service).
-9. This unique URL will remain unchanged as long as your web service is deployed on Render. You can now integrate it in Budibase to make API calls to your custom endpoints.
+- Web application: [https://meinewebbapp-nidzo.azurewebsites.net/](https://meinewebbapp-nidzo.azurewebsites.net/)
+- Swagger UI: [https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html](https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html)
+
+### Running locally
+
+**Frontend**
+```bash
+cd _frontend
+npm install
+npm run dev
+```
+Dev server starts at `http://localhost:5173`.
+
+**Backend**
+```bash
+cd _backend
+docker build -t my-image .
+docker run -p 8080:8080 my-image
+```
+Backend API runs at `http://localhost:8080`.  
+Swagger UI available at `http://localhost:8080/swagger-ui.html`.
+
+The H2 database is in-memory and automatically seeded with demo users and daydreams on startup.
+
+## Demo Credentials (Seed Data)
+
+- admin / admin1234
+- additional demo users are seeded in backend startup initialization
+
+## Links
+
+- Running app: https://meinewebbapp-nidzo.azurewebsites.net/
+- OpenAPI (Swagger UI): https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html
+- OpenAPI JSON: https://meinewebbapp-nidzo.azurewebsites.net/v3/api-docs
+- Presentation video: not yet ready
+
+## Deliverables Status
+
+- Source code: available in this repository
+- Documentation: this README
+- Running demonstrator: available via link above
+- Video presentation: pending
 
 ## Project Management
-> 🚧: Include all the participants and briefly describe each of their **individual** contribution and/or roles. Screenshots/descriptions of your Kanban board or similar project management tools are welcome.
-TODO: Start
-Hier noch was zur individualität schreiben?
-TODO: End
+
 ### Roles
-- Back-end developer: Matovic Nikola, Luca Masella
-- Front-end developer: Jasin Jusufi, Silvan Rebmann
+
+| Member | Primary Role |
+|---|---|
+| Nikola Matovic | Architect, cloud engineering, backend-frontend integration |
+| Luca Masella | Design, business case framing, requirements |
+| Jasin Jusufi | Backend implementation, API endpoints, service layer |
+| Silvan Rebmann | Frontend implementation, domain model, UI/UX |
 
 ### Milestones
-1. **Analysis**: Scenario ideation, use case analysis and user story writing.✅
-2. **Prototype Design**: Creation of wireframe and prototype.✅
-3. **Domain Design**: Definition of domain model.✅
-4. **Business Logic and API Design**: Definition of business logic and API.
-5. **Data and API Implementation**: Implementation of data access and business logic layers, and API.
-6. **Security and Frontend Implementation**: Integration of security framework and frontend realisation.
-7. (optional) **Deployment**: Deployment of Web application on cloud infrastructure.
 
-#### Maintainer
-- Nikola Matovic
-- Luca Masella
-- Jasin Jusufi
-- Silvan Rebmann
+| # | Milestone | Status |
+|---|---|---|
+| 1 | Analysis: scenario ideation, use case analysis, user story writing | ✅ |
+| 2 | Domain Design: definition of domain model | ✅ |
+| 3 | Frontend implementation: design, prototyping and realization | ✅ |
+| 4 | Business Logic and API Design: definition of business logic and API | ✅ |
+| 5 | Data and API implementation: data access and business logic layers | ✅ |
+| 6 | Security: API-level security with role-based authorization | ✅ |
+| 7 | Demonstrator: end-to-end application consuming REST APIs | ✅ |
 
-#### License
-- [Apache License, Version 2.0](blob/master/LICENSE)
-=======
-# Internet-Technology-GroupWork
+
+## Team
+
+- Nikola Matovic: defined the overall technical architecture, coordinated backend-frontend integration, handled deployment setup, and managed cloud environment configuration.
+- Luca Masella: led design decisions for user journeys and business case framing, contributed to requirement structuring, and supported validation of implemented features against use cases.
+- Jasin Jusufi: implemented core backend functionality, including API endpoints, service-layer logic, and data-access integration in the Spring Boot application.
+- Silvan Rebmann: implemented frontend views and interaction flow, contributed to domain-model alignment with UI behavior, and supported end-to-end testing of user-facing features.
+
+All members participated in planning, reviews, testing, and iterative improvements across both frontend and backend.
+
+## License
+
+Apache License 2.0. See LICENSE.
