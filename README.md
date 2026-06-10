@@ -11,35 +11,26 @@ Users can:
 
 ## Contents
 
-- [Project Context](#project-context)
-- [Team](#team)
-- [Scenario](#scenario)
-- [User Stories](#user-stories)
-- [Domain Model](#domain-model)
-- [Use Case Overview](#use-case-overview)
-- [Architecture](#architecture)
-- [Implemented Views](#implemented-views)
-- [Wireframes](#wireframes)
-- [Business Logic](#business-logic)
-- [API Summary](#api-summary)
-- [Security](#security)
+- [Requirements Analysis](#requirements-analysis)
+- [Design Decisions](#design-decisions)
 - [Implementation](#implementation)
-- [Execution](#execution)
-- [Demo Credentials](#demo-credentials-seed-data)
+- [Installation](#installation)
 - [Project Management](#project-management)
 - [Links](#links)
 - [License](#license)
 
-## Project Context
+## Requirements Analysis
+
+### Project Context
 
 This project was developed for the FHNW Internet Technology group work assessment.
 
-## Scenario
+### Scenario
 
 The platform enables users to store personal ideas and optionally share them publicly.
 A user can keep daydreams private, publish selected content, and interact with the community through comments.
 
-## User Stories
+### User Stories
 
 ### Core user stories
 1. As a user, I want to register so that I can create my own account.
@@ -50,39 +41,133 @@ A user can keep daydreams private, publish selected content, and interact with t
 6. As a user, I want to comment on daydreams.
 7. As an admin, I want to manage users and daydreams.
 
-## Domain Model
+### Domain Model
 
-Main entities:
+The domain model consists of **4 entities** and **1 enum**:
+
+**Entities:**
 - User
 - Daydream
 - Comment
 - Tag
-- Visibility (enum)
+
+**Enum:**
+- Visibility
 
 Domain diagram:
 
 ![Class Diagram](images/class-diagram.png)
 
-## Use Case Overview
+### Use Case Overview
 
 ![Use Case Diagram](images/use-case.png)
 
-## Architecture
+## Design Decisions
 
-The solution follows a layered architecture over two tiers:
+### Architecture
 
-- Frontend tier
-  - React + Vite
-  - route-based views and API consumption
+The application follows a **three-layer, two-tier architecture**:
 
-- Backend tier
-  - Spring Boot 3 + Java 17
-  - Controller layer
-  - Service layer (business rules)
-  - Repository layer (JPA)
-  - H2 database
+### Frontend Tier
+- **Frontend** (React + Vite discussed with Devid): Single-page application consuming REST APIs. Route-based views, protected routes, role-based navigation, and local JWT token handling.
 
-## Implemented Views
+### Backend Tier (Three Layers)
+- **Controller layer** (Spring Boot): REST endpoints for auth, daydreams, comments, users, and admin operations. Input validation at the API boundary.
+- **Service layer** (Spring Boot): Business rule enforcement, ownership checks, visibility filtering.
+- **Repository layer** (Spring Data JPA): Database access via JPA repositories.
+- **Database** (H2 in-memory): Seeded on startup with demo users and daydream content.
+
+### Communication
+The frontend communicates with the backend exclusively through REST API calls. Authentication uses JWT bearer tokens — the token is stored locally after login and attached to every subsequent API request.
+
+### Design Principles
+
+- **OOP and domain modeling:** The backend is structured around the domain entities `User`, `Daydream`, `Comment`, and `Tag`, with `Visibility` as an enum for controlled state handling.
+- **Architectural patterns:** The application uses a controller-service-repository pattern to separate API handling, business logic, and data access responsibilities.
+- **API design principles:** REST endpoints are grouped by responsibility (`/v1/auth`, `/v1/dreams`, `/v1/admin`) and documented through OpenAPI/Swagger.
+- **DRY principle:** Reusable frontend components such as `Shell`, `ProtectedRoute`, `DaydreamCard`, and `DaydreamComposer` reduce duplication across views.
+- **CRUD paradigm:** The application supports create, read, update, and delete operations for daydreams, plus administrative delete operations for moderation.
+- **Routing and separation of concerns:** React Router manages frontend navigation, while Spring Boot handles backend processing and persistence separately.
+
+### Constraints Reflected
+
+- **At least three layers on two tiers:** The solution uses a frontend tier and a backend tier with controller, service, and repository layers.
+- **At least four views:** The application provides more than four views, including landing, login, signup, feed, create, detail, profile, and admin pages.
+- **At least four entities:** The domain model contains four entities (`User`, `Daydream`, `Comment`, `Tag`) and one enum (`Visibility`).
+- **Business rule in the service layer:** Ownership checks, admin-only moderation, and visibility filtering are implemented in the service layer and security configuration.
+- **Responsive web design:** The interface is responsive on desktop and mobile to improve user experience and usability across devices.
+- **Technology constraints:** The backend is implemented with Spring Boot 3 and Java 17, the API is documented with OpenAPI 3.0, and the frontend choice was technically justified as a full-code solution.
+
+### Project Structure
+
+### Backend
+
+```
+_backend/
+├── src/main/
+│   ├── java/ch/fhnw/dream/
+│   │   ├── DayDreamApplication.java (bootstrap, seed data)
+│   │   ├── business/service/
+│   │   │   ├── DaydreamService.java
+│   │   │   └── UserService.java
+│   │   ├── controller/
+│   │   │   ├── AdminController.java
+│   │   │   ├── AuthController.java
+│   │   │   ├── DaydreamController.java
+│   │   │   ├── SpaController.java
+│   │   │   └── UserController.java
+│   │   ├── data/domain/
+│   │   │   ├── Comment.java
+│   │   │   ├── Daydream.java
+│   │   │   ├── Tag.java
+│   │   │   ├── User.java
+│   │   │   └── Visibility.java (enum)
+│   │   ├── data/repository/
+│   │   │   ├── CommentRepository.java
+│   │   │   ├── DaydreamRepository.java
+│   │   │   └── UserRepository.java
+│   │   └── security/
+│   │       └── SecurityConfig.java
+│   └── resources/
+│       └── application.properties
+├── pom.xml
+├── mvnw / mvnw.cmd
+└── Dockerfile
+```
+
+### Frontend
+
+```
+_frontend/
+├── src/
+│   ├── components/
+│   │   ├── DaydreamCard.jsx
+│   │   ├── DaydreamComposer.jsx
+│   │   ├── ProtectedRoute.jsx
+│   │   └── Shell.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── pages/
+│   │   ├── AdminPage.jsx
+│   │   ├── CreateDaydreamPage.jsx
+│   │   ├── DaydreamDetailPage.jsx
+│   │   ├── FeedPage.jsx
+│   │   ├── LandingPage.jsx
+│   │   ├── LoginPage.jsx
+│   │   ├── ProfilePage.jsx
+│   │   └── SignupPage.jsx
+│   ├── services/
+│   │   └── api.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── dist/ (compiled output)
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+### Implemented Views
 
 - Landing page
 - Login page
@@ -93,7 +178,7 @@ The solution follows a layered architecture over two tiers:
 - Profile page
 - Admin page
 
-## Wireframes
+### Wireframes
 
 ### 01 Landing
 ![Landing Wireframe](images/wireframes/01_landing_page.png)
@@ -125,13 +210,19 @@ The solution follows a layered architecture over two tiers:
 ### 10 Navigation Map
 ![Navigation Map](images/wireframes/10_navigation_map.png)
 
-## Responsive Design
+### Responsive Design
 
-The application is designed to work on both desktop and mobile devices. The following mobile screenshot shows the create daydream view on a narrow screen, including responsive spacing, stacked form fields, and the compact mobile navigation.
+The application is designed to work on both desktop and mobile devices. We implemented the responsive layout to increase user experience by making the interface clearer and easier to use on smaller screens. The following mobile screenshot shows the create daydream view on a narrow screen, including responsive spacing, stacked form fields, and the compact mobile navigation.
 
 ![Responsive Mobile Screenshot](images/create_mobile.PNG)
 
-## Business Logic
+## Implementation
+
+### Frontend Approach
+
+The full-code frontend approach (React instead of a low-code tool) was chosen because the required functionality — protected routes, role-based rendering, and inline edit composer — could not be achieved with a low-code tool without significant limitations.
+
+### Business Logic
 
 The service layer enforces the following business rules that reflect real application constraints:
 
@@ -162,7 +253,7 @@ Public daydreams are accessible to any authenticated user. Private daydreams are
 The full Swagger/OpenAPI documentation is available at:  
 [https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html](https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html)
 
-## API Summary
+### API Summary
 
 ### Authentication
 - POST /v1/auth/signup
@@ -183,26 +274,12 @@ The full Swagger/OpenAPI documentation is available at:
 - GET /v1/admin/dreams
 - DELETE /v1/admin/dreams/{id}
 
-## Security
+### Security
 
 The backend includes role-based authorization with protected admin endpoints.
 Current project version uses JWT-based bearer authentication for API access.
 
-## Implementation
-
-The application follows a three-layer, two-tier architecture:
-
-- **Frontend** (React + Vite): Single-page application consuming REST APIs. Route-based views, protected routes, role-based navigation, and local JWT token handling.
-- **Controller layer** (Spring Boot): REST endpoints for auth, daydreams, comments, users, and admin operations. Input validation at the API boundary.
-- **Service layer** (Spring Boot): Business rule enforcement, ownership checks, visibility filtering.
-- **Repository layer** (Spring Data JPA): Database access via JPA repositories.
-- **Database** (H2 in-memory): Seeded on startup with demo users and daydream content.
-
-The frontend communicates with the backend exclusively through REST API calls. Authentication uses JWT bearer tokens — the token is stored locally after login and attached to every subsequent API request.
-
-The full-code frontend approach (React instead of a low-code tool) was chosen because the required functionality — protected routes, role-based rendering, and inline edit composer — could not be achieved with a low-code tool without significant limitations.
-
-## Technology Stack
+### Technology Stack
 
 ### Backend
 - Java 17
@@ -220,34 +297,7 @@ The full-code frontend approach (React instead of a low-code tool) was chosen be
 - Vite
 - CSS
 
-## Run Locally
-
-### Prerequisites
-- Java 17
-- Node.js 18+ (recommended)
-- npm
-
-### Backend
-From _backend:
-
-1. Build and run with Maven wrapper
-   - ./mvnw spring-boot:run
-
-or
-
-2. Build and run with Docker
-   - docker build -t daydream-backend .
-   - docker run -p 8080:8080 daydream-backend
-
-### Frontend
-From _frontend:
-
-1. Install dependencies
-   - npm install
-2. Start development server
-   - npm run dev
-
-## Execution
+## Installation
 
 ### Running app (deployed)
 
@@ -262,7 +312,7 @@ cd _frontend
 npm install
 npm run dev
 ```
-Dev server starts at `http://localhost:5173`.
+Dev server starts at `http://localhost:3000`.
 
 **Backend**
 ```bash
@@ -275,7 +325,7 @@ Swagger UI available at `http://localhost:8080/swagger-ui.html`.
 
 The H2 database is in-memory and automatically seeded with demo users and daydreams on startup.
 
-## Demo Credentials (Seed Data)
+### Demo Credentials (Seed Data)
 
 - admin / admin1234
 - additional demo users are seeded in backend startup initialization
@@ -285,14 +335,14 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 - Running app: https://meinewebbapp-nidzo.azurewebsites.net/
 - OpenAPI (Swagger UI): https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html
 - OpenAPI JSON: https://meinewebbapp-nidzo.azurewebsites.net/v3/api-docs
-- Presentation video: not yet ready
+- Presentation video: not yet ready, will be provided here after the video has been recorded
 
 ## Deliverables Status
 
 - Source code: available in this repository
 - Documentation: this README
 - Running demonstrator: available via link above
-- Video presentation: pending
+- Video presentation: pending, will be provided here after the video has been recorded
 
 ## Project Management
 
@@ -316,6 +366,10 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 | 5 | Data and API implementation: data access and business logic layers | ✅ |
 | 6 | Security: API-level security with role-based authorization | ✅ |
 | 7 | Demonstrator: end-to-end application consuming REST APIs | ✅ |
+
+### Collaboration and Communication
+
+The team distributed responsibilities across architecture, design, backend, and frontend work while still collaborating on reviews and integration tasks. Progress and source code were managed through GitHub to keep version history and shared project information transparent. The README served as the central documentation artifact for requirements, design decisions, implementation details, and installation instructions.
 
 
 ## Team
