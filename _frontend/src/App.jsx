@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Shell from './components/Shell';
 import { useAuth } from './context/AuthContext';
+import AdminPage from './pages/AdminPage';
 import CreateDaydreamPage from './pages/CreateDaydreamPage';
 import DaydreamDetailPage from './pages/DaydreamDetailPage';
 import FeedPage from './pages/FeedPage';
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="/create" element={<CreateDaydreamPage />} />
         <Route path="/daydreams/:id" element={<DaydreamDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

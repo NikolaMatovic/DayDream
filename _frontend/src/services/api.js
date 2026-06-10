@@ -103,3 +103,37 @@ export async function createComment(daydreamId, content) {
     body: JSON.stringify({ content }),
   });
 }
+
+export async function adminGetAllUsers() {
+  return request('/v1/admin/users');
+}
+
+export async function adminDeleteUser(id) {
+  const response = await fetch(`/v1/admin/users/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (!response.ok && response.status !== 204) {
+    const body = await parseResponse(response);
+    const error = new Error(body?.message || 'Löschen fehlgeschlagen');
+    error.status = response.status;
+    throw error;
+  }
+}
+
+export async function adminGetAllDaydreams() {
+  return request('/v1/admin/dreams');
+}
+
+export async function adminDeleteDaydream(id) {
+  const response = await fetch(`/v1/admin/dreams/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (!response.ok && response.status !== 204) {
+    const body = await parseResponse(response);
+    const error = new Error(body?.message || 'Löschen fehlgeschlagen');
+    error.status = response.status;
+    throw error;
+  }
+}

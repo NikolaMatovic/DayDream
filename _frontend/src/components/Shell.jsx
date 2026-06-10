@@ -10,7 +10,7 @@ const navItems = [
 
 export default function Shell() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleLogout() {
@@ -47,6 +47,15 @@ export default function Shell() {
               {item.label}
             </NavLink>
           ))}
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) => `nav-link${isActive ? ' nav-link-active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              Admin
+            </NavLink>
+          )}
           <div className="user-pill">
             <span>{user?.username}</span>
             <button

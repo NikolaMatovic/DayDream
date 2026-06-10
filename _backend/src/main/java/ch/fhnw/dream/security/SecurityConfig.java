@@ -41,8 +41,12 @@ public class SecurityConfig {
                             "/feed",
                             "/create",
                             "/profile",
+                            "/admin",
                             "/daydreams/**"
                         ).permitAll()
+                        
+                        // Admin-only endpoints
+                        .requestMatchers("/v1/admin/**").hasRole("ADMIN")
                         
                         // All other requests require authentication
                         .anyRequest().authenticated()

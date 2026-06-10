@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
     () => ({
       user,
       isAuthenticated: Boolean(user),
+      isAdmin: user?.role === 'ADMIN',
       async login(credentials) {
         const authenticatedUser = await loginRequest(credentials);
         setUser(authenticatedUser);
