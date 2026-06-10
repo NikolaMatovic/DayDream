@@ -99,4 +99,10 @@ public class DaydreamService {
         }
         daydreamRepository.delete(daydream);
     }
+
+    public void adminDeleteDaydream(Long id) {
+        Daydream daydream = daydreamRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Daydream nicht gefunden"));
+        daydreamRepository.delete(daydream);
+    }
 }

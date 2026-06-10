@@ -97,7 +97,7 @@ public class AuthController {
             }
 
             // Login erfolgreich
-            String role = "admin".equals(user.getUsername()) ? "ADMIN" : "USER";
+            String role = user.getRole() != null ? user.getRole() : "USER";
 
             authenticateUser(user.getUsername(), role, httpRequest);
 

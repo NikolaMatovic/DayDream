@@ -34,10 +34,11 @@ public class DayDreamApplication {
             daydreamRepository.deleteAll();
             userRepository.deleteAll();
 
-            User luca = createSeedUser(userService, "lucafratello", "luca.masella@students.fhnw.ch", "password");
-            User nikola = createSeedUser(userService, "nidzolesko", "nikola.matovic@students.fhnw.ch", "password");
-            User jasin = createSeedUser(userService, "JasinJson", "jasin.jusufi@students.fhnw.ch", "password");
-            User silvan = createSeedUser(userService, "SilvanoHermano", "silvan.rebmann@students.fhnw.ch", "password");
+            User luca = createSeedUser(userService, "lucafratello", "luca.masella@students.fhnw.ch", "password", "USER");
+            User nikola = createSeedUser(userService, "nidzolesko", "nikola.matovic@students.fhnw.ch", "password", "ADMIN");
+            User jasin = createSeedUser(userService, "JasinJson", "jasin.jusufi@students.fhnw.ch", "password", "USER");
+            User silvan = createSeedUser(userService, "SilvanoHermano", "silvan.rebmann@students.fhnw.ch", "password", "USER");
+            createSeedUser(userService, "admin", "admin@daydream.local", "admin1234", "ADMIN");
 
             daydreamService.createDaydream(createSeedDaydream(
                 luca,
@@ -130,11 +131,12 @@ public class DayDreamApplication {
         };
     }
 
-    private User createSeedUser(UserService userService, String username, String email, String password) {
+    private User createSeedUser(UserService userService, String username, String email, String password, String role) {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPasswordHash(PASSWORD_ENCODER.encode(password));
+        user.setRole(role);
         return userService.createUser(user);
     }
 
