@@ -336,7 +336,7 @@ The H2 database is in-memory and automatically seeded with demo users and daydre
 - Running app on the Azure Cloud☁️: https://meinewebbapp-nidzo.azurewebsites.net/
 - OpenAPI (Swagger UI): https://meinewebbapp-nidzo.azurewebsites.net/swagger-ui.html
 - OpenAPI JSON: https://meinewebbapp-nidzo.azurewebsites.net/v3/api-docs
-- Presentation video: https://meinewebbapp-nidzo.azurewebsites.net/
+- Presentation video: https://www.youtube.com/watch?v=tH4FXAja-X0
 
 ## Deliverables Status
 
